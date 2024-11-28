@@ -25,9 +25,6 @@ public class Menu
 
         switch (option!.ToLower())
         {
-
-
-
             case "1":
                 user();
                 break;
@@ -40,7 +37,6 @@ public class Menu
             default:
                 InvalidMenu();
                 break;
-
         }
     }
 
