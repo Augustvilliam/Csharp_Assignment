@@ -3,6 +3,11 @@ namespace Business.Services;
 
 public class Menu
 {
+    private readonly List<User> Users;
+    public Menu(List<User> users)
+    {
+        Users = users; 
+    }
     public void ShowMenu()
     {
         while (true)
@@ -11,7 +16,7 @@ public class Menu
         }
     }
 
-    private void MainMenu()
+    static void MainMenu()
     {
         Console.Clear();
         Console.WriteLine("Welcome to the user admin. Please choose one of the options!");
@@ -26,10 +31,10 @@ public class Menu
         switch (option!.ToLower())
         {
             case "1":
-                user();
+                User();
                 break;
             case "2":
-                edit();
+                Edit();
                 break;
             case "q":
                 Quit();
@@ -40,23 +45,105 @@ public class Menu
         }
     }
 
+    private void EditMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("Please select an option");
+        Console.WriteLine("-------------------------------------------");
+        Console.WriteLine("1. Edit User");
+        Console.WriteLine("2. Delete User");
+        Console.WriteLine("3. Back To Main Menu");
+        Console.WriteLine("-------------------------------------------");
+        var option = Console.ReadLine();
 
-    private void user()
+        switch (option!.ToLower())
+        {
+            case "1":
+                EditUser();
+                break;
+            case "2":
+                Delete();
+                break;
+            case "q":
+                Back();
+                break;
+            default:
+                InvalidMenu();
+                break;
+        }
+    }
+
+    private void ImportMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("Enter or copy a valid filepath to import a usersheet.");
+        Console.WriteLine("-------------------------------------------");
+        Console.WriteLine("1. Import");
+        Console.WriteLine("2. Back To main Menu");
+        Console.WriteLine("-------------------------------------------");
+
+        var option = Console.ReadLine();
+
+        switch (option!.ToLower())
+        {
+            case "1":
+                ImportUser();
+                break;
+            case "2":
+                Back();
+                break;
+
+            default:
+                InvalidMenu();
+                break;
+        }
+    }
+    
+   
+
+    static void User()
     {
         Console.Clear();
         Console.WriteLine("Nothing here WIP, press any key to return.");
         Console.ReadKey();
     }
 
-    private void edit()
+    static void Edit()
     {
         Console.Clear();
         Console.WriteLine("Nothing here WIP, press any key to return.");
         Console.ReadKey();
     }
 
+    static void Delete()
+    {
+        Console.Clear();
+        Console.WriteLine("Nothing here WIP, press any key to return.");
+        Console.ReadKey();
+    }
 
-    private void Quit()
+    static void Back()
+    {
+        Console.Clear();
+        Console.WriteLine("Nothing here WIP, press any key to return.");
+        Console.ReadKey();
+    }
+
+    static void EditUser()
+    {
+        Console.Clear();
+        Console.WriteLine("Nothing here WIP, press any key to return.");
+        Console.ReadKey();
+    }
+
+    static void ImportUser()
+    {
+        Console.Clear();
+        Console.WriteLine("WIP nothing to see here");
+        Console.ReadKey();
+
+    }
+    static void Quit()
     {
         Console.Clear();
         Console.WriteLine("Do you wish to exist the 'Choremaker 5000?' (y/n): ");
@@ -69,10 +156,11 @@ public class Menu
         }
 
     }
-    private void InvalidMenu()
+    static void InvalidMenu()
     {
         Console.Clear();
         Console.WriteLine("Please choose a valid option.");
         Console.ReadKey();
     }
+
 }
