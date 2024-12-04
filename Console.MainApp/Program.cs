@@ -1,5 +1,8 @@
 ﻿using Business.Services;
 
 
-Menu menu = new Menu();
-menu.ShowMenu();
+MenuService menu = new MenuService();
+while(true)
+{
+    menu.ShowMenu();
+}
