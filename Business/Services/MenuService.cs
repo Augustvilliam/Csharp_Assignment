@@ -15,6 +15,7 @@ public class MenuService
 
     public void MainMenu()
     {
+        LoadFromFile();
         Console.Clear();
         Console.WriteLine("Welcome to the user admin. Please choose one of the options!");
         Console.WriteLine("-------------------------------------------");
