@@ -2,7 +2,7 @@
 
 namespace Business.Models;
 
-internal class User
+public class User
 {
     public string UserId { get; set; } = Guid.NewGuid().ToString();
     public string FirstName { get; set; } = null!;

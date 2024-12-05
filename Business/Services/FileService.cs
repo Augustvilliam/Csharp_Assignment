@@ -1,41 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Business.Models;
+
 
 namespace Business.Services;
 
-internal class FileService
+public class FileService
 {
-    private readonly string _filePath = "users.json";
+    private readonly string _directoryPath;
+    private readonly string _filePath;
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    internal List<User> _users = [];
+    public FileService(string directoryPath = "Data", string fileName = "list.json")
+    {
+        _directoryPath = directoryPath;
+        _filePath = Path.Combine(_directoryPath, fileName);
+        _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+    }
 
-    internal void Add(User user)
+    public void SaveListToFile<T>(List<T> list)
+    {
+        try
         {
-        _users.Add(user);
-        SaveToFile();
+            if (!Directory.Exists(_directoryPath))
+                Directory.CreateDirectory(_directoryPath);
+
+            var json = JsonSerializer.Serialize(list, _jsonSerializerOptions);
+
+            File.WriteAllText(_filePath, json);
         }
-    internal IEnumerable<User> GetAll()
-    {
-        return _users;
-    }
-
-    internal void SaveToFile()
-    {
-        var json = JsonSerializer.Serialize(_users);
-        File.WriteAllText(_filePath, json);
-    }
-
-    internal void LoadFromFile()
-    {
-        if (File.Exists(_filePath))
+        catch (Exception ex)
         {
+            Debug.WriteLine(ex.Message);
+
+        }
+
+
+
+    }
+    public List<User> LoadList()
+    {
+
+        try
+        {
+            if (!File.Exists(_filePath))
+                return [];
+
             var json = File.ReadAllText(_filePath);
-            _users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
+            var list = JsonSerializer.Deserialize<List<User>>(json, _jsonSerializerOptions);
+            return list ?? [];
         }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return[];
+
+        }
+
     }
 }
