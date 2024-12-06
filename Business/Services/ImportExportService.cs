@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Models;
 
 namespace Business.Services;
 
@@ -73,8 +74,49 @@ public class ImportExportService
     private void ImportUsers()
     {
         Console.Clear();
-        Console.WriteLine("Nothing here WIP, press any key to return.");
-        Console.ReadKey();
+        Console.WriteLine("Please enter the file name, including extention. (only .txt format");
+        string fileName = Console.ReadLine()!;
+
+        try
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, fileName);
+
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine("File not found. Make sure the File existst and that you include extentions.");
+                Console.ReadKey();
+                return;
+            }
+            var lines = File.ReadAllLines(filePath);
+            var userService = new UserService();
+
+            foreach (var line in lines)
+            {
+                var parts = line.Split(",");
+
+                if (parts.Length == 3)
+                {
+                    User user = new()
+                    {
+                        FirstName = parts[0].Trim(),
+                        LastName = parts[1].Trim(),
+                        Email = parts[2].Trim(),
+                    };
+                    userService.Add(user);
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid format in line: {line}. skipping");
+                }
+            }
+            Console.WriteLine("User imported!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Something went wrong :(");
+            Console.ReadKey();
+        }
     }
 
 
