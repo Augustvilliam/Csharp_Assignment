@@ -19,7 +19,7 @@ public class UserManagementService
             Console.WriteLine("Welcome to the user admin. Please choose one of the options!");
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine("1. Create User");
-            Console.WriteLine("2. Show/edit existing users");
+            Console.WriteLine("2. Show Existing Users");
             Console.WriteLine("3. Edit/Delete User");
             Console.WriteLine("b. Back to Main Menu");
             var option = Console.ReadLine();

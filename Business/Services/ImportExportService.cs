@@ -47,7 +47,25 @@ public class ImportExportService
     private void ExportUsers()
     {
         Console.Clear();
-        Console.WriteLine("Nothing here WIP, press any key to return.");
+        Console.WriteLine("Exporting user data to text...");
+
+        try
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, "users.txt");
+
+            var users = new UserService().GetAll();
+            var lines = users.Select(users => $"ID: {users.UserId}, Name: {users.FirstName} {users.LastName}, Email: {users.Email}");
+
+            File.WriteAllLines(filePath, lines);
+
+            Console.WriteLine($"Users Exported to {filePath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred while epoxting users, please try again.");
+        }
+        Console.WriteLine("press any key to return");
         Console.ReadKey();
     }
 

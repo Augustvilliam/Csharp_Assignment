@@ -23,8 +23,8 @@ public class MainMenuService
             Console.Clear();
             Console.WriteLine("Welcome to the user admin. Please choose one of the options!");
             Console.WriteLine("-------------------------------------------");
-            Console.WriteLine("1. Create User");
-            Console.WriteLine("2. Show/edit existing users");
+            Console.WriteLine("1. User Menu");
+            Console.WriteLine("2. Import/Export Menu");
             Console.WriteLine("q. Exist the Admin Tool");
             Console.WriteLine("-------------------------------------------");
             var option = Console.ReadLine();
