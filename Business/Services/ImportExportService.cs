@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Services;
 
 public class ImportExportService
 {
-    private readonly FileService _fileService;
-    public ImportExportService(FileService fileService)
+    private readonly IUserService _userService;
+    private readonly IFileService _fileService;
+    
+
+    public ImportExportService(IUserService userService, IFileService fileService)
     {
+        _userService = userService;
         _fileService = fileService;
     }
+
     public void ShowMenu()
     {
         while (true)
@@ -55,16 +57,23 @@ public class ImportExportService
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string filePath = Path.Combine(desktopPath, "users.txt");
 
-            var users = new UserService().GetAll();
-            var lines = users.Select(users => $"ID: {users.UserId}, Name: {users.FirstName} {users.LastName}, Email: {users.Email}");
+            var users = _fileService.LoadList();
+            if (users != null && users.Any())
+            {
+                var lines = users.Select(users => $"ID: {users.UserId}, Name: {users.FirstName} {users.LastName}, Email: {users.Email}");
 
-            File.WriteAllLines(filePath, lines);
+                File.WriteAllLines(filePath, lines);
 
-            Console.WriteLine($"Users Exported to {filePath}");
+                Console.WriteLine($"Users Exported to {filePath}");
+            }
+            else
+            {
+                Console.WriteLine("No users found to export.");
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred while epoxting users, please try again.");
+            Console.WriteLine($"An error occurred while exporting users: {ex.Message}");
         }
         Console.WriteLine("press any key to return");
         Console.ReadKey();
@@ -89,7 +98,8 @@ public class ImportExportService
                 return;
             }
             var lines = File.ReadAllLines(filePath);
-            var userService = new UserService();
+
+
 
             foreach (var line in lines)
             {
@@ -103,7 +113,8 @@ public class ImportExportService
                         LastName = parts[1].Trim(),
                         Email = parts[2].Trim(),
                     };
-                    userService.Add(user);
+                    _userService.Add(user);
+
                 }
                 else
                 {
@@ -114,7 +125,7 @@ public class ImportExportService
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Something went wrong :(");
+            Console.WriteLine($"Something went wrong: {ex.Message}");
             Console.ReadKey();
         }
     }

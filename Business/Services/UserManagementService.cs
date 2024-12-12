@@ -1,16 +1,17 @@
 ﻿
+using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Services;
 
 public class UserManagementService
 {
-    private readonly UserService _userService;
-
-    public UserManagementService(UserService userService)
+    private readonly IUserService _userService;
+    public UserManagementService(IUserService userService)
     {
         _userService = userService;
     }
+
     public void ShowMenu()
     {
         while (true)

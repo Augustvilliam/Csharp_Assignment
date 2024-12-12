@@ -1,15 +1,18 @@
-﻿using Business.Models;
+﻿using Business.Interfaces;
+using Business.Models;
 
 
 namespace Business.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private List<User> _users = new();
-    private readonly FileService _fileService = new();
+    private readonly IFileService _fileService;
 
-
-
+    public UserService(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
     public void Add(User user)
     {
         _users.Add(user);

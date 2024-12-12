@@ -1,15 +1,16 @@
-﻿
-
+﻿using Business.Interfaces;
 using Business.Services;
 
-var userService = new UserService();
-var fileService = new FileService();
-
+IFileService fileService = new FileService();
+IUserService userService = new UserService(fileService);
+var importExportService = new ImportExportService(userService, fileService);
 var userManagementService = new UserManagementService(userService);
-var importExportService = new ImportExportService(fileService);
-
 var mainMenuService = new MainMenuService(userManagementService, importExportService);
 
+// Visa huvudmenyn
 mainMenuService.ShowMenu();
+
+
+
 
 //Hela detta kodstycket generarat av ChatGPT .4o då jag var lat.

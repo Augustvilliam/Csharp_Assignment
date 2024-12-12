@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
+using Business.Interfaces;
 using Business.Models;
 
 
 namespace Business.Services;
 
-public class FileService
+public class FileService : IFileService
 {
     private readonly string _directoryPath;
     private readonly string _filePath;
@@ -34,9 +35,6 @@ public class FileService
             Debug.WriteLine(ex.Message);
 
         }
-
-
-
     }
     public List<User> LoadList()
     {
