@@ -1,4 +1,5 @@
 ﻿
+using Business.Helper;
 using Business.Interfaces;
 using Business.Models;
 
@@ -50,10 +51,14 @@ public class UserManagementService
     {
         Console.Clear();
         Console.WriteLine("Enter User details:");
-        Console.Clear();
+        
 
-        User user = new();
+        User user = new()
+        {
+           UserId = IdGenerator.GenerateShortId(5),
+        };
 
+    
         Console.WriteLine("Please Enter your first name.");
         user.FirstName = Console.ReadLine()!;
 
@@ -62,7 +67,27 @@ public class UserManagementService
 
         Console.WriteLine("Please Enter your Email adress.");
         user.Email = Console.ReadLine()!;
-        
+
+        Console.WriteLine("Please Enter your Adress adress.");
+        user.Adress = Console.ReadLine()!;
+
+        Console.WriteLine("Please Enter your Postal-Code.");
+        user.Postal = Console.ReadLine()!;
+
+        Console.WriteLine("Please Enter your locality.");
+        user.Locality = Console.ReadLine()!;
+
+        Console.WriteLine("Please Enter your Phone Number.");
+        user.Phonenmbr = Console.ReadLine()!;
+
+        if (!UserValidation.ValidateUser(user, out var errorMessage))
+        {
+            Console.WriteLine($"Validation failed:{errorMessage}");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+            return;
+        }
+
         _userService.Add(user);
         
         Console.WriteLine("User created successfully. Press any key to continue.");
@@ -74,10 +99,18 @@ public class UserManagementService
         var users = _userService.GetAll();
         foreach(var user in users)
         {
-            Console.WriteLine($"ID:{user.UserId} Name:{user.FirstName}{user.LastName} Email:{user.Email}");
+            Console.WriteLine("------------------------------------------------------------------------------");
+            Console.WriteLine($"ID:{user.UserId}");
+            Console.WriteLine($"Name:{user.FirstName} {user.LastName}");
+            Console.WriteLine($"Email:{user.Email}");
+            Console.WriteLine($"Adress:{user.Adress}");
+            Console.WriteLine($"Postal-Code:{user.Postal}");
+            Console.WriteLine($"Locality:{user.Locality}");
+            Console.WriteLine($"Phone Number:{user.Phonenmbr}");
+            Console.WriteLine("------------------------------------------------------------------------------");
         }
 
-        Console.WriteLine("Press any ket to return.");
+        Console.WriteLine("Press any key to return.");
         Console.ReadKey();
     }
     private void EditUser()

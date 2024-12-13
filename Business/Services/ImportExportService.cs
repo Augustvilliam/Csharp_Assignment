@@ -1,11 +1,13 @@
 ﻿
+using System.Text.Json;
 using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Services;
 
-public class ImportExportService
+public class ImportExportService : IImportExportService
 {
+
     private readonly IUserService _userService;
     private readonly IFileService _fileService;
     
@@ -14,6 +16,22 @@ public class ImportExportService
     {
         _userService = userService;
         _fileService = fileService;
+    }
+
+    public List<T> LoadListFromFile<T>(string fileName)
+    {
+        if (!File.Exists(fileName))
+        {
+            return new List<T>();
+        }
+        var json = File.ReadAllText(fileName); 
+        return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+    }
+
+    public void SaveListToFile<T>(List<T> list, string fileName)
+    {
+        var json = JsonSerializer.Serialize(list);
+        File.WriteAllText(fileName, json);
     }
 
     public void ShowMenu()
