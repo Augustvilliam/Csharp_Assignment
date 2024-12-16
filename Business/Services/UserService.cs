@@ -23,4 +23,35 @@ public class UserService : IUserService
         _users = _fileService.LoadList() ?? new List<User>();
         return _users; 
     }
+
+    public User GetUserById(string id)
+    {
+        return _users.FirstOrDefault(u => u.UserId == id);
+    }
+
+    public void EditUser(string id, User updateUser)
+    {
+        var user = GetUserById(id);
+        if (user != null)
+        {
+            user.FirstName = updateUser.FirstName;
+            user.LastName = updateUser.LastName;
+            user.Email = updateUser.Email;
+            user.Adress = updateUser.Adress;
+            user.Postal = updateUser.Postal;
+            user.Locality = updateUser.Locality;
+            user.Phonenmbr = updateUser.Phonenmbr;
+
+            _fileService.SaveListToFile(_users);
+        }
+    }
+
+    public void DeleteUser(string id)
+    {
+        var user = GetUserById(id);
+        if (user != null )
+        {
+            _users.Remove(user);  
+        }
+    }
 }

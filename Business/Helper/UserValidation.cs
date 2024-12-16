@@ -34,44 +34,44 @@ public static class UserValidation
 
     public static bool ValidateUser(User user, out string errorMessage)
     {
-        if(!ValidateName(user.FirstName))
+        if (!ValidateName(user.FirstName))
         {
-            errorMessage = "First name must containt atleast 2 characters.";
+            errorMessage = "First name must contain at least 2 characters.";
             return false;
         }
         if (!ValidateName(user.LastName))
         {
-            errorMessage = "Last name must containt atleast 2 characters.";
+            errorMessage = "Last name must contain at least 2 characters.";
             return false;
         }
-        if (!ValidateName(user.Email))
+        if (!ValidateEmail(user.Email))
         {
-            errorMessage = "Your Email is invalid. Please enter a valid one. E.g (Exmaple@Example.ex) .";
+            errorMessage = "Invalid email format. Please enter a valid one (e.g., example@example.com).";
             return false;
         }
-        if (!ValidateName(user.Phonenmbr))
+        if (!ValidatePhone(user.Phonenmbr))
         {
-            errorMessage = "Phone Number must only contain numbers";
+            errorMessage = "Phone number must only contain numbers.";
             return false;
         }
-        if (!ValidateName(user.Postal))
+        if (!ValidatePostal(user.Postal))
         {
-            errorMessage = "Postal-Code must only contain numbers.";
+            errorMessage = "Postal code must only contain numbers.";
             return false;
         }
-        if (!ValidateName(user.Adress))
+        if (!ValidateAdress(user.Adress))
         {
-            errorMessage = "Your adress cannot be empty";
+            errorMessage = "Address cannot be empty.";
             return false;
         }
-        if (!ValidateName(user.Locality))
+        if (!ValidateLocality(user.Locality))
         {
-            errorMessage = "Your Locality cannot be empty";
+            errorMessage = "Locality cannot be empty.";
             return false;
         }
 
-        errorMessage =string.Empty;
+        errorMessage = string.Empty;
         return true;
-
     }
+
 }

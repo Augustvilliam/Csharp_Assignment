@@ -115,9 +115,56 @@ public class UserManagementService
     }
     private void EditUser()
     {
-        Console.Clear();
-        Console.WriteLine("Nothing here WIP, press any key to return.");
-        Console.ReadKey();
+        Console.WriteLine("Entar a valid User ID to edit.");
+        string userId = Console.ReadLine()!;
+
+        var user = _userService.GetUserById(userId);
+        if (user != null)
+        {
+            Console.WriteLine("User not found.");
+            Console.ReadKey();
+            return;
+        }
+
+        Console.WriteLine("Edit user details. Leave blank to keep current information.");
+
+        Console.WriteLine($"Current First Name: {user!.FirstName}");
+        string firstName = Console.ReadLine()!;
+        user.FirstName = string.IsNullOrEmpty(firstName) ? user.FirstName : firstName;
+    
+
+        Console.WriteLine($"Current First Name: {user!.LastName}");
+        string lastName = Console.ReadLine()!;
+        user.FirstName = string.IsNullOrEmpty(lastName) ? user.LastName : lastName;
+
+        Console.WriteLine($"Current First Name: {user!.Email}");
+        string email = Console.ReadLine()!;
+        user.Email = string.IsNullOrEmpty(email) ? user.Email : email;
+
+        Console.WriteLine($"Current First Name: {user!.Adress}");
+        string adress = Console.ReadLine()!;
+        user.Adress = string.IsNullOrEmpty(adress) ? user.Adress : adress;
+
+        Console.WriteLine($"Current First Name: {user!.Postal}");
+        string postal = Console.ReadLine()!;
+        user.Postal = string.IsNullOrEmpty(postal) ? user.Postal : postal;
+
+        Console.WriteLine($"Current First Name: {user!.Locality}");
+        string locality = Console.ReadLine()!;
+        user.Locality = string.IsNullOrEmpty(locality) ? user.Locality : firstName;
+
+        Console.WriteLine($"Current First Name: {user!.Phonenmbr}");
+        string phoneNumber = Console.ReadLine()!;
+        user.Phonenmbr = string.IsNullOrEmpty(phoneNumber) ? user.Phonenmbr : phoneNumber;
+
+
+        if (!UserValidation.ValidateUser(user, out var errorMessage))
+        {
+            Console.WriteLine($"Something went wrong. {errorMessage}");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+            return;
+        }
     }
 
 
