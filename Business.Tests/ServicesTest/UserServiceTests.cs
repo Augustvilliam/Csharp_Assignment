@@ -23,7 +23,18 @@ public class UserServiceTests
     public void AddUser_shouldAddUserToList()
     {
         //Arrange
-        var user = new User { FirstName = "Villiam", LastName = "Fagrelius", Email = "villiam@example.com" };
+        var user = new User 
+        {
+            UserId = Guid.NewGuid(),
+            FirstName = "test",
+            LastName = "test",
+            Email = "test@test.test",
+            Postal = "123",
+            Adress = "test",
+            Locality = "test",
+            Phonenmbr = "123",
+
+        };
 
         //Act
         _userService.Add(user);
@@ -39,7 +50,17 @@ public class UserServiceTests
         //arrange
         var users = new List<User>
             {
-            new User { FirstName = "Villiam", LastName = "Fagrelius", Email = "villiam@example.com"}
+            new User
+                { 
+                    FirstName = "test",
+                    LastName = "test",
+                    Email = "test@test.test",
+                    Postal = "123",
+                    Adress = "test",
+                    Locality = "test",
+                    Phonenmbr = "123",
+
+                }
 
             };
         _fileserviceMock.Setup(fs => fs.LoadList()).Returns(users);
@@ -49,4 +70,29 @@ public class UserServiceTests
         Assert.Equal(users, result);
     }
 
+    [Fact]
+    public void GetUserById_Should_Return_Correct_User()
+    {
+        var userService = new UserService();
+        var user = new User { UserId = Guid.NewGuid(), FirstName = "test" };
+        userService.AddUser(user);
+
+        var retrievedUser = userService.GetUserById(user.UserId);
+
+        Assert.NotNull(retrievedUser);
+        Assert.Equal("test", retrievedUser.FirstName);
+    }
+
+    [Fact]
+    public void DeleteUser_Should_Remove_User_From_List()
+    {
+        //Arrange
+        var userService = new UserService();
+        var user = new User { UserId = Guid.NewGuid() };
+        userService.AddUser(user);
+        //act
+        userService.DeleteUser(user.UserId);
+        //assert
+        Assert.Empty(userService.GetAllUsers());
+    }
 }
