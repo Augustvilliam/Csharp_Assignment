@@ -27,7 +27,7 @@ public class ImportExportServiceTests
         //arrange
         var testList = new List<User>
         {
-            new User { UserId = Guid.NewGuid(), FirstName = "Villiam", LastName ="Fagrelius", Email ="Villiam@example.se" }
+            new User { UserId = Guid.NewGuid().ToString(), FirstName = "Villiam", LastName ="Fagrelius", Email ="Villiam@example.se" }
         };
         
         //act
@@ -51,7 +51,7 @@ public class ImportExportServiceTests
         //arrange
         var testList = new List<User>
         {
-            new User { UserId = Guid.NewGuid(), FirstName = "Villiam", LastName ="Fagrelius", Email ="Villiam@example.se" }
+            new User { UserId = Guid.NewGuid().ToString(), FirstName = "Villiam", LastName ="Fagrelius", Email ="Villiam@example.se" }
         };
         var json = JsonSerializer.Serialize(testList);
         File.WriteAllText(_testFileName, json);

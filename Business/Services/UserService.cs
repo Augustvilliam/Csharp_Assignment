@@ -52,6 +52,7 @@ public class UserService : IUserService
         if (user != null )
         {
             _users.Remove(user);  
+            _fileService.SaveListToFile(_users);
         }
     }
 }

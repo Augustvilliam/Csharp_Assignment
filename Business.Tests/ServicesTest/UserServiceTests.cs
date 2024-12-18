@@ -10,13 +10,13 @@ namespace Business.Tests.ServicesTest;
 public class UserServiceTests
 {
 
-    private readonly Mock<IFileService> _fileserviceMock;
+    private readonly Mock<IFileService> _fileServiceMock;
     private readonly UserService _userService;
 
     public UserServiceTests()
     {
-        _fileserviceMock = new Mock<IFileService>();
-        _userService = new UserService(_fileserviceMock.Object);
+        _fileServiceMock = new Mock<IFileService>();
+        _userService = new UserService(_fileServiceMock.Object);
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class UserServiceTests
         //Arrange
         var user = new User 
         {
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             FirstName = "test",
             LastName = "test",
             Email = "test@test.test",
@@ -40,7 +40,7 @@ public class UserServiceTests
         _userService.Add(user);
 
         //Assert
-        _fileserviceMock.Verify(fs => fs.SaveListToFile(It.IsAny<List<User>>()), Times.Once);
+        _fileServiceMock.Verify(fs => fs.SaveListToFile(It.IsAny<List<User>>()), Times.Once);
 
     }
 
@@ -63,7 +63,7 @@ public class UserServiceTests
                 }
 
             };
-        _fileserviceMock.Setup(fs => fs.LoadList()).Returns(users);
+        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);
         //act
         var result = _userService.GetAll();
         //assert
@@ -73,26 +73,33 @@ public class UserServiceTests
     [Fact]
     public void GetUserById_Should_Return_Correct_User()
     {
-        var userService = new UserService();
-        var user = new User { UserId = Guid.NewGuid(), FirstName = "test" };
-        userService.AddUser(user);
 
-        var retrievedUser = userService.GetUserById(user.UserId);
+        var users = new List<User>
+        {
+            new User {UserId ="1", FirstName = "test"},
+             new User {UserId ="2", FirstName = "test2"},
 
-        Assert.NotNull(retrievedUser);
-        Assert.Equal("test", retrievedUser.FirstName);
+        };
+        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);   
+
+        var user = _userService.GetUserById("1");
+
+        Assert.NotNull(user);
+        Assert.Equal("test", user.FirstName);
     }
 
     [Fact]
-    public void DeleteUser_Should_Remove_User_From_List()
+    public void DeleteUserShouldRemoveUserFromList()
     {
         //Arrange
-        var userService = new UserService();
-        var user = new User { UserId = Guid.NewGuid() };
-        userService.AddUser(user);
+        var user = new User { UserId = "1", FirstName = "test" };
+        var users = new List<User> { user };
+        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);
+
+
         //act
-        userService.DeleteUser(user.UserId);
+        _userService.DeleteUser("1");
         //assert
-        Assert.Empty(userService.GetAllUsers());
+        _fileServiceMock.Verify(fs => fs.SaveListToFile(It.Is<List<User>>(u => u.Count == 0)), Times.Once);
     }
 }

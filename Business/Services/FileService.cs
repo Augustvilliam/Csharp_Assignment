@@ -38,20 +38,19 @@ public class FileService : IFileService
     }
     public List<User> LoadList()
     {
-
         try
         {
             if (!File.Exists(_filePath))
-                return [];
+                return new List<User>();
 
             var json = File.ReadAllText(_filePath);
             var list = JsonSerializer.Deserialize<List<User>>(json, _jsonSerializerOptions);
-            return list ?? [];
+            return list ?? new List<User>();
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return[];
+            return new List<User>();
 
         }
 

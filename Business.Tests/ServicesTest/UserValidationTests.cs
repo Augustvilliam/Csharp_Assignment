@@ -11,8 +11,7 @@ public class UserValidationTests
     public void ValidateShouldReturnTrueForValidUser()
     {
         //arrange
-        var validator = new UserValidator();
-        new User
+        var user = new User
         {
             UserId = "",
             FirstName = "test",
@@ -25,20 +24,21 @@ public class UserValidationTests
         };
 
         //Act
-        var result = validator.ValidateUser(User);
+        var result = UserValidation.ValidateUser(user, out var errorMessage);
         //assert
         Assert.True(result);
+        Assert.Equal(string.Empty, errorMessage);
     }
     
     [Fact]
     public void ValidateShouldReturnFalseForInvalidEmail()
     {
-        var validator = new UserValidator();
+        
         var user = new User
         {
             Email = "test@test.test"
         };
-        var result = validator.ValidateUser(user);
+        var result = UserValidation.ValidateUser(user, out var errorMessage);
 
         Assert.False(result);
     }
@@ -47,13 +47,13 @@ public class UserValidationTests
     [Fact]
     public void ValidateShouldReturnFalseIfRequiredFieldsAreMissing()
     {
-        var validator = new UserValidator();
-        var User = new User
+       
+        var user = new User
         {
             FirstName = "",
             LastName = "",
         };
-        var result = validator.ValidateUser(User);
+        var result = UserValidation.ValidateUser(user, out var errorMessage);
         Assert.False(result);
     }
 }

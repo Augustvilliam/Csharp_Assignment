@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+using Business.Interfaces;
 using Business.Models;
 using Business.Services;
 
@@ -10,9 +12,10 @@ public class FileServiceTests
     public void SaveUsersToFile_ShouldCreateFileWithUsers()
     {
         //arrange
-
-        var filePath = "test_users.json";
-        var fileService = new FileService();
+        var directroyPath = "testData";
+        var fileName = "test_users.json";
+        var fileService = new FileService(directroyPath, fileName);
+        
         var users = new List<User>
         {
             new User
@@ -29,12 +32,13 @@ public class FileServiceTests
 
         };
         //act
-        fileService.SaveListToFile(users, filePath);
+        fileService.SaveListToFile(users);
         //assert
+        var filePath = Path.Combine(directroyPath, fileName);
         Assert.True(File.Exists(filePath));
-        Assert.Contains ("Test", File.ReadAllText (filePath));
+        Assert.Contains ("test", File.ReadAllText (filePath));
         //clean
-        File.Delete(filePath);
+        Directory.Delete (directroyPath, true);
     }
 
   
@@ -43,13 +47,15 @@ public class FileServiceTests
     public void LoadUserFromFile_shouldLoadUsersCorrectly()
     {
         //arrange
-        var filePath = "test_users.json";
-        var fileService = new FileService();
+        var directoryPath = "TestData";
+        var fileName = "test_users.json";
+        var fileService = new FileService (directoryPath, fileName);
+        
         var users = new List<User>
          {
             new User
             {
-                UserId = "",
+                UserId = Guid.NewGuid().ToString(),
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.test",
@@ -60,15 +66,17 @@ public class FileServiceTests
             }
 
         };
+        fileService.SaveListToFile(users);
         //act
-        fileService.SaveListToFile(users, filePath);
+        
+        var loadedUsers = fileService.LoadList();
 
-        var loadedUsers = fileService.LoadList(filePath);
         //assert
         Assert.Single(loadedUsers);
         Assert.Equal("test", loadedUsers[0].FirstName);
+       
         //clean
-        File.Delete(filePath);
+        Directory.Delete(directoryPath, true);
     }
 
 
@@ -76,19 +84,23 @@ public class FileServiceTests
     public void LoadUsersFromFile_shouldHandleEmptyFile()
     {
         //arrange
+        var directoryPath = "testData";
+        var fileName = "empty.json";
+        var filePath = Path.Combine(directoryPath, fileName);
 
-        var filePath = "empty.json";
+        Directory.CreateDirectory(directoryPath);
         File.WriteAllText(filePath, string.Empty);
-        var fileService = new FileService();
+
+        var fileService = new FileService(directoryPath, fileName);
         //act
 
-        var loadedUsers = fileService.LoadList(filePath);
+        var loadedUsers = fileService.LoadList();
         //assert
 
         Assert.Empty(loadedUsers);
         //clean
 
-        File.Delete(filePath);
+        Directory.Delete(directoryPath, true);
     }
 
 }
