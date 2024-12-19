@@ -73,17 +73,17 @@ public class UserServiceTests
     [Fact]
     public void GetUserById_Should_Return_Correct_User()
     {
-
+        //arrange
         var users = new List<User>
         {
-            new User {UserId ="1", FirstName = "test"},
-             new User {UserId ="2", FirstName = "test2"},
+            new User {UserId = "1", FirstName = "test"},
+            new User {UserId ="2", FirstName = "test2"}
 
         };
         _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);   
-
+        //act
         var user = _userService.GetUserById("1");
-
+        //assert
         Assert.NotNull(user);
         Assert.Equal("test", user.FirstName);
     }

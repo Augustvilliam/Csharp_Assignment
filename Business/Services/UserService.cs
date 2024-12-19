@@ -26,6 +26,7 @@ public class UserService : IUserService
 
     public User GetUserById(string id)
     {
+        _users = _fileService.LoadList() ?? new List<User>();
         return _users.FirstOrDefault(u => u.UserId == id);
     }
 
@@ -48,7 +49,8 @@ public class UserService : IUserService
 
     public void DeleteUser(string id)
     {
-        var user = GetUserById(id);
+        _users = _fileService.LoadList() ?? new List<User>();
+        var user = _users.FirstOrDefault(u => u.UserId == id);
         if (user != null )
         {
             _users.Remove(user);  

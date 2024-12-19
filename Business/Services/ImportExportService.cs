@@ -78,7 +78,7 @@ public class ImportExportService : IImportExportService
             var users = _fileService.LoadList();
             if (users != null && users.Any())
             {
-                var lines = users.Select(users => $"ID: {users.UserId}, Name: {users.FirstName} {users.LastName}, Email: {users.Email}");
+                var lines = users.Select(users => $"ID: {users.UserId}, Name: {users.FirstName} {users.LastName}, Email: {users.Email} Adress: {users.Adress} Postal: {users.Postal} Locality: {users.Locality} Phone Number: {users.Phonenmbr}");
 
                 File.WriteAllLines(filePath, lines);
 
