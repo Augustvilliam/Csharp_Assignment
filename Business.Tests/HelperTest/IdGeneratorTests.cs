@@ -10,7 +10,7 @@ public class IdGeneratorTests
     public void GenerateShorIdShoudReturnTrimmedId()
     {
         //act
-        var id = IdGenerator.GenerateShortId(5);
+        var id = IdGenerator.GenerateShortId(5); //lätt att byta trimmat (5 täcken) till längre vid brist eller om det skulle uppstå dubbletter.
         //assert
         Assert.NotNull(id);
         Assert.Equal(5, id.Length);
@@ -23,3 +23,5 @@ public class IdGeneratorTests
         Assert.Throws<ArgumentException>(() => IdGenerator.GenerateShortId(33));
     }
 }
+
+//Testar att id faktiskt trimmas.

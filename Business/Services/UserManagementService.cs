@@ -51,7 +51,7 @@ public class UserManagementService
         }
     }
     
-    private void CreateUser()
+    private void CreateUser() // skapar användare. tilldelar Id direket.
     {
         Console.Clear();
         Console.WriteLine("Enter User details:");
@@ -62,7 +62,6 @@ public class UserManagementService
            UserId = IdGenerator.GenerateShortId(5),
         };
 
-        string errorMessage;
 
         //Förnamn
         do
@@ -148,7 +147,7 @@ public class UserManagementService
         Console.WriteLine("User created successfully. Press any key to continue.");
         Console.ReadKey();
     }
-    private void ViewAllUsers()
+    private void ViewAllUsers() // se alla användare. med fullständig info.
     {
         Console.Clear();
         var users = _userService.GetAll();
@@ -168,8 +167,9 @@ public class UserManagementService
         Console.WriteLine("Press any key to return.");
         Console.ReadKey();
     }
-    private void EditUser()
+    private void EditUser() //redigera användare genomm att ange identiskt ID. därav max 5 täcken på id.
     {
+        Console.Clear();
         Console.WriteLine("Entar a valid User ID to edit.");
         string userId = Console.ReadLine()!;
 
@@ -180,48 +180,178 @@ public class UserManagementService
             Console.ReadKey();
             return;
         }
-
-        Console.WriteLine("Edit user details. Leave blank to keep current information.");
-
-        Console.WriteLine($"Current First Name: {user.FirstName}");
-        string firstName = Console.ReadLine()!;
-        user.FirstName = string.IsNullOrEmpty(firstName) ? user.FirstName : firstName;
-
-
-        Console.WriteLine($"Current Last Name: {user!.LastName}");
-        string lastName = Console.ReadLine()!;
-        user.LastName = string.IsNullOrEmpty(lastName) ? user.LastName : lastName;
-
-        Console.WriteLine($"Current Email: {user.Email}");
-        string email = Console.ReadLine()!;
-        user.Email = string.IsNullOrEmpty(email) ? user.Email : email;
-
-        Console.WriteLine($"Current Adress: {user.Adress}");
-        string adress = Console.ReadLine()!;
-        user.Adress = string.IsNullOrEmpty(adress) ? user.Adress : adress;
-
-        Console.WriteLine($"Current Postal Code: {user.Postal}");
-        string postal = Console.ReadLine()!;
-        user.Postal = string.IsNullOrEmpty(postal) ? user.Postal : postal;
-
-        Console.WriteLine($"Current Locality: {user.Locality}");
-        string locality = Console.ReadLine()!;
-        user.Locality = string.IsNullOrEmpty(locality) ? user.Locality : locality;
-
-        Console.WriteLine($"Current Phonenumber: {user.Phonenmbr}");
-        string phoneNumber = Console.ReadLine()!;
-        user.Phonenmbr = string.IsNullOrEmpty(phoneNumber) ? user.Phonenmbr : phoneNumber;
-
-
-        if (!UserValidation.ValidateUser(user, out var errorMessage))
+        Console.Clear();
+        Console.WriteLine($"Edit user details. Leave blank to keep current information. Current user: {user.UserId}");
+        do
         {
-            Console.WriteLine($"Something went wrong. {errorMessage}");
-            Console.WriteLine("Press any key to try again.");
-            Console.ReadKey();
-            return;
+            Console.WriteLine($"Current First Name: {user.FirstName}");
+            Console.WriteLine("Enter a new first name. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidateName(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your first name must be aleast two characters long.");
+                }
+            }
+            else
+            {
+                break;
+            }
         }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current Last Name: {user.LastName}");
+            Console.WriteLine("Enter a new first name. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidateName(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your first name must be aleast two characters long.");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current Email: {user.Email}");
+            Console.WriteLine("Enter a new Email. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidateEmail(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your Email must adhear to the following format xx@xx.xx");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current Adress: {user.Adress}");
+            Console.WriteLine("Enter a new Adress. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidateAdress(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your Adress must be aleast two characters long.");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current Postal-code: {user.Postal}");
+            Console.WriteLine("Enter a new postal-code. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidatePostal(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your postal-code may only contain didgets");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current locality: {user.Locality}");
+            Console.WriteLine("Enter a new Locality. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidateLocality(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your Locality must be aleast two characters long.");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
+
+        do
+        {
+            Console.WriteLine($"Current Phonenumber: {user.Phonenmbr}");
+            Console.WriteLine("Enter a new Phonenumber. Or leave blank if you wish for it to remain the same.");
+            string input = Console.ReadLine()!;
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (UserValidation.ValidatePhone(input))
+                {
+                    user.FirstName = input;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Your Phonenumber may only contain didgets.");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (true);
 
         _userService.EditUser(userId, user);
+
         Console.WriteLine("User updated successfully.");
         Console.ReadKey();
     }

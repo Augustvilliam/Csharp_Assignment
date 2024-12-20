@@ -65,7 +65,7 @@ public class ImportExportService : IImportExportService
         }
     }
 
-    private void ExportUsers()
+    private void ExportUsers() // Skicka ut en Json fil till skrivbordet om det så önskar, varför kan man undra, jag undrar varför inte....
     {
         Console.Clear();
         Console.WriteLine("Exporting user data to text...");
@@ -98,7 +98,7 @@ public class ImportExportService : IImportExportService
     }
 
 
-    private void ImportUsers()
+    private void ImportUsers() // för att läsa in en EXTERN JSON fil från skrivbordet. Varför? Jag hade tråkigt. den är förövrigt fullkomligt väderlös om man inte copypastar en exakt rätt formaterad fil.
     {
         Console.Clear();
         Console.WriteLine("Please enter the file name, including extention. (only .txt format");
