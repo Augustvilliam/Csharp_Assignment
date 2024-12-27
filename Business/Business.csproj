@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
-    <Folder Include="Factories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
