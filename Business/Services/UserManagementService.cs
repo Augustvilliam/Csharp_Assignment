@@ -215,7 +215,7 @@ public class UserManagementService
             {
                 if (UserValidation.ValidateName(input))
                 {
-                    user.FirstName = input;
+                    user.LastName = input;
                     break;
                 }
                 else

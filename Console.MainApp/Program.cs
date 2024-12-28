@@ -4,11 +4,14 @@ using Business.Services;
 
 
 
-var serviceCollection = new ServiceCollection();
+var serviceProvider = new ServiceCollection()
+    .AddSingleton<IUserService, UserService>()
+    .AddSingleton<UserManagementService>()
+    .AddSingleton<IFileService, FileService>()
+    .BuildServiceProvider();
 
-serviceCollection.AddTransient<IUserService, UserService>();
-
-var serviceProvider = serviceCollection.BuildServiceProvider ();
+var userManagementService = serviceProvider.GetRequiredService<UserManagementService>();
+userManagementService.ShowMenu();
 
 
 
