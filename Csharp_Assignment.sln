@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Busine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Tests", "Business.Tests\Business.Tests.csproj", "{BB2F9B03-E7C3-4B8A-85E7-A502F8224534}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileApp", "MobileApp\MobileApp.csproj", "{5DAA4183-0E8E-4571-9CF0-F47C316D3183}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{BB2F9B03-E7C3-4B8A-85E7-A502F8224534}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2F9B03-E7C3-4B8A-85E7-A502F8224534}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2F9B03-E7C3-4B8A-85E7-A502F8224534}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DAA4183-0E8E-4571-9CF0-F47C316D3183}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
