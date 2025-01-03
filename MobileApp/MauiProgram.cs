@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces;
 using Business.Services;
 using Microsoft.Extensions.Logging;
+using MobileApp.Pages;
 
 namespace MobileApp;
 //OBS ENDAST DESCTOP. Ansvarar inte för hur det fungerar eller ser ut i övriga miljöer.
@@ -19,7 +20,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUserService, UserService>();
         builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddSingleton<UserManagementService>();
-
+        builder.Services.AddTransient<ListUserPage>();
 
 
 #if DEBUG

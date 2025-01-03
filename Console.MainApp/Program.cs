@@ -15,15 +15,6 @@ userManagementService.ShowMenu();
 
 
 
-//*
-//*IFileService fileService = new FileService();
-//*IUserService userService = new UserService(fileService);
-//*var importExportService = new ImportExportService(userService, fileService);
-//*//*var userManagementService = new UserManagementService(userService);
-//*var mainMenuService = new MainMenuService(userManagementService, importExportService);
-//*
-// Visa huvudmenyn
-//*mainMenuService.ShowMenu();
 
 
 

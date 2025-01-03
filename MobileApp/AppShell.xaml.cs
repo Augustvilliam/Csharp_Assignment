@@ -1,10 +1,15 @@
-﻿namespace MobileApp
+﻿using MobileApp.Pages;
+
+namespace MobileApp;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        Routing.RegisterRoute(nameof(UserMainPage), typeof(UserMainPage));
+        Routing.RegisterRoute(nameof(ListUserPage), typeof(ListUserPage));
+
     }
 }

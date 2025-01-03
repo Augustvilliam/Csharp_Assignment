@@ -4,12 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MobileApp"
+    xmlns:pages="clr-namespace:MobileApp.Pages"    
     Shell.FlyoutBehavior="Disabled"
     Title="MobileApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        Title="Main Page"
+        ContentTemplate="{DataTemplate pages:UserMainPage}"
         Route="MainPage" />
+    
+    <ShellContent
+       Title="User Menu"
+       ContentTemplate="{DataTemplate pages:ListUserPage}"
+       Route="UserPage" />
 
 </Shell>
