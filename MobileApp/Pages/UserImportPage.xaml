@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Pages.UserImportPage"
+             Title="UserImportPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to The Import Export Page. This is a WIP and therefore look like abolute dodo"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Button
+         x:Name="Button_Back"
+         Clicked="Button_Back_Clicked"
+         Text="Return"
+         HorizontalOptions="Center" 
+     />
+    </VerticalStackLayout>
+</ContentPage>

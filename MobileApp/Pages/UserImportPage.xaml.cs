@@ -1,8 +1,8 @@
 namespace MobileApp.Pages;
 
-public partial class ListUserPage : ContentPage
+public partial class UserImportPage : ContentPage
 {
-	public ListUserPage()
+	public UserImportPage()
 	{
 		InitializeComponent();
 	}
@@ -10,6 +10,5 @@ public partial class ListUserPage : ContentPage
     private async void Button_Back_Clicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("UserMainPage");
-
     }
 }

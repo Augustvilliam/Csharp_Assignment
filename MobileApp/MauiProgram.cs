@@ -21,6 +21,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddSingleton<UserManagementService>();
         builder.Services.AddTransient<ListUserPage>();
+        builder.Services.AddTransient<UserImportPage>();
+        builder.Services.AddTransient<UserMainPage>();
+
 
 
 #if DEBUG
@@ -30,3 +33,5 @@ public static class MauiProgram
         return builder.Build();
     }
 }
+
+

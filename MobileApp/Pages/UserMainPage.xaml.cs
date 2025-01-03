@@ -7,9 +7,18 @@ public partial class UserMainPage : ContentPage
         InitializeComponent();
 	}
 
+    private void Button_Quit_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private async void Button_Import_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("UserImportPage");
+    }
+
     private async void Button_List_Clicked(object sender, EventArgs e)
     {
-        var listUserPage = App.Current.Handler.MauiContext.Services.GetService<ListUserPage>();
-        await Navigation.PushAsync(listUserPage);
+        await Shell.Current.GoToAsync("ListUserPage");
     }
 }
