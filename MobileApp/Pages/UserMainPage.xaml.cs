@@ -9,7 +9,7 @@ public partial class UserMainPage : ContentPage
 
     private void Button_Quit_Clicked(object sender, EventArgs e)
     {
-
+        Application.Current.Quit();
     }
 
     private async void Button_Import_Clicked(object sender, EventArgs e)

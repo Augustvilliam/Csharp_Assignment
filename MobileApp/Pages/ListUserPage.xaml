@@ -12,35 +12,107 @@
                 Text="Här Kommer massa knappar för alternativ"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" 
+                Margin="10,0,10,10"
+                />
+          
+            <Button
+                x:Name="Button_Create"
+                Text="Creat User"
+                HorizontalOptions="CenterAndExpand"
+                Margin="10,0,10,10"
                 />
             <Button
-                 x:Name="Button_Back"
-                 Clicked="Button_Back_Clicked"
-                 Text="Return"
-                 HorizontalOptions="Center" 
+                Text="????"
+                HorizontalOptions="CenterAndExpand"
+                Margin="10,0,10,10"
+                />
+            <Button
+                x:Name="Button_Back"
+                Clicked="Button_Back_Clicked"
+                Text="Return"
+                HorizontalOptions="CenterAndExpand" 
+                Margin="10,0,10,10"
                 />
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="1" Margin="20">
-            
+
             <Label 
                  Text="Här ska det finnas alla användare som man kan gå in på för att se detaljerad info. Även extra knapp för att ta bort"
                  VerticalOptions="Center" 
                  HorizontalOptions="Center"
                 />
+            <CollectionView  x:Name="UserListView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding FirstName}"/>
+                            <Label Text="{Binding LastName}"/>
+                            <Label Text="{Binding UserId}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+       
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="2" Margin="20">
-
             <Label 
-                 Text="Här ska man skapa användare "
+                 Text="Create User"
                  VerticalOptions="Center" 
                  HorizontalOptions="Center"
+                />
+            <Entry
+                x:Name="Entry_FirstName"
+                Placeholder="First Name"
+                HorizontalOptions="Fill"
+                Margin="10,0,10,10"
+
+                />
+            
+            <Entry
+                x:Name="Entry_LastName"
+                Placeholder="Last Name"
+                HorizontalOptions="Fill"
+                Margin="10,0,10,10"
+
+                 />
+            <Entry
+               x:Name="Entry_Email"
+               Placeholder="Email"
+               HorizontalOptions="Fill"
+               Margin="10,0,10,10"
+           />
+            <Entry
+               x:Name="Entry_Adress"
+               Placeholder="Adress"
+               HorizontalOptions="Fill"
+               Margin="10,0,10,10"
+           />
+            <Entry
+               x:Name="Entry_Postal"
+               Placeholder="Postal-Code"
+               HorizontalOptions="Fill"
+               Margin="10,0,10,10"
+           />
+            <Entry
+               x:Name="Entry_Locality"
+               Placeholder="Locality"
+               HorizontalOptions="Fill"
+               Margin="10,0,10,10"
+           />
+            <Entry
+               x:Name="Entry_Phone"
+               Placeholder="Phonenumber"
+               HorizontalOptions="Fill"
+               Margin="10,0,10,10"
+           />
+            <Button
+                Text="Create User"
+                Clicked="Button_Create_Clicked"
                 />
         </VerticalStackLayout>
 
     </Grid>
     
-  
-
 </ContentPage>
