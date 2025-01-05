@@ -10,7 +10,8 @@ public partial class ListUserPage : ContentPage
 {
     private readonly IUserService _userService;
     private ObservableCollection<User> _users;
-	public ListUserPage(IUserService userService)
+    private User _selectedUser;
+    public ListUserPage(IUserService userService)
 	{
 		InitializeComponent();
         _userService = userService;
@@ -50,4 +51,28 @@ public partial class ListUserPage : ContentPage
         }
     }
 
+    private void Button_Delete_Clicked(object sender, EventArgs e)
+    {
+        var user = (sender as Button).BindingContext as User;
+        if (user != null)
+        {
+            _userService.DeleteUser(user.UserId);
+            _users.Remove(user);
+        }
+    }
+
+    private void Button_Edit_Clicked(object sender, EventArgs e)
+    {
+        _selectedUser = (sender as Button).BindingContext as User;
+        if (_selectedUser != null)
+        {
+            Entry_FirstName.Text = _selectedUser.FirstName;
+            Entry_LastName.Text = _selectedUser.LastName;
+            Entry_Adress.Text = _selectedUser.FirstName;
+            Entry_Postal.Text = _selectedUser.FirstName;
+            Entry_Locality.Text = _selectedUser.FirstName;
+            Entry_Phone.Text = _selectedUser.FirstName;
+
+        }
+    }
 }
