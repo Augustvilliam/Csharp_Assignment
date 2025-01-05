@@ -79,7 +79,6 @@
                  Text="Create User"
                  VerticalOptions="Center" 
                  HorizontalOptions="Center"
-                Margin="0 0 20 0"
                 />
             <Entry
                 x:Name="Entry_FirstName"

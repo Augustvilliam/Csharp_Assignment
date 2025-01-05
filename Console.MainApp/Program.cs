@@ -7,7 +7,7 @@ using Business.Services;
 var serviceProvider = new ServiceCollection()
     .AddSingleton<IUserService, UserService>()
     .AddSingleton<UserManagementService>()
-    .AddSingleton<IFileService, FileService>()
+    .AddSingleton<IFileService, fileService>()
     .BuildServiceProvider();
 
 var userManagementService = serviceProvider.GetRequiredService<UserManagementService>();

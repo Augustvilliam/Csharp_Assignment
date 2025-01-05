@@ -14,7 +14,7 @@ public class FileServiceTests
         //arrange
         var directroyPath = "testData";
         var fileName = "test_users.json";
-        var fileService = new FileService(directroyPath, fileName);
+        var fileService = new fileService(directroyPath, fileName);
         
         var users = new List<User>
         {
@@ -49,7 +49,7 @@ public class FileServiceTests
         //arrange
         var directoryPath = "TestData";
         var fileName = "test_users.json";
-        var fileService = new FileService (directoryPath, fileName);
+        var fileService = new fileService (directoryPath, fileName);
         
         var users = new List<User>
          {
@@ -91,7 +91,7 @@ public class FileServiceTests
         Directory.CreateDirectory(directoryPath);
         File.WriteAllText(filePath, string.Empty);
 
-        var fileService = new FileService(directoryPath, fileName);
+        var fileService = new fileService(directoryPath, fileName);
         //act
 
         var loadedUsers = fileService.LoadList();

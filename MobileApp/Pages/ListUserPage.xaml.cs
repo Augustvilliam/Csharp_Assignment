@@ -8,13 +8,16 @@ namespace MobileApp.Pages;
 
 public partial class ListUserPage : ContentPage
 {
+    private readonly IFileService _fileService;
     private readonly IUserService _userService;
     private ObservableCollection<User> _users;
     private User _selectedUser;
-    public ListUserPage(IUserService userService)
+    public ListUserPage(IUserService userService, IFileService fileService)
 	{
 		InitializeComponent();
         _userService = userService;
+        _fileService = fileService;
+
         _users = new ObservableCollection<User>(_userService.GetAll());
         UserListView.ItemsSource = _users;
     }
@@ -24,6 +27,22 @@ public partial class ListUserPage : ContentPage
         await Shell.Current.GoToAsync("UserMainPage");
 
     }
+    //G OnAppearing Gjord med chatGPT. Anropas när sidan blir aktiv för att alltid ladda in användarlistan.
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ReloadedUsers();
+    }
+    private void ReloadedUsers()
+    {
+        var loadedUsers = _userService.GetAll();
+        _users.Clear();
+        foreach (var user in loadedUsers)
+        {
+            _users.Add(user);
+        }
+    }
+
 
     private async void Button_Create_Clicked(object sender, EventArgs e)
     {
@@ -42,7 +61,7 @@ public partial class ListUserPage : ContentPage
             };
            
             _userService.Add(newUser);
-            _users.Add(newUser);
+            ReloadedUsers();
             await DisplayAlert("Success", $"User{newUser.FirstName} {newUser.LastName} {newUser.UserId} created.", "OK");
         }
         else
@@ -57,7 +76,7 @@ public partial class ListUserPage : ContentPage
         if (user != null)
         {
             _userService.DeleteUser(user.UserId);
-            _users.Remove(user);
+            ReloadedUsers();
         }
     }
 
@@ -72,6 +91,7 @@ public partial class ListUserPage : ContentPage
             Entry_Postal.Text = _selectedUser.FirstName;
             Entry_Locality.Text = _selectedUser.FirstName;
             Entry_Phone.Text = _selectedUser.FirstName;
+            Button_Create.Text = "Update User";
 
         }
     }

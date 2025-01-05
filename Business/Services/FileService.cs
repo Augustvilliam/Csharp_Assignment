@@ -6,13 +6,13 @@ using Business.Models;
 
 namespace Business.Services;
 
-public class FileService : IFileService
+public class fileService : IFileService
 {
     private readonly string _directoryPath;
     private readonly string _filePath;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    public FileService(string directoryPath = "Data", string fileName = "list.json")
+    public fileService(string directoryPath = "Data", string fileName = "list.json")
     {
         _directoryPath = directoryPath;
         _filePath = Path.Combine(_directoryPath, fileName);
