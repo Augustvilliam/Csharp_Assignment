@@ -9,17 +9,13 @@ namespace MobileApp.Pages;
 public partial class ListUserPage : ContentPage
 {
     private readonly IFileService _fileService;
-    private readonly IUserService _userService;
     private ObservableCollection<User> _users;
     private User _selectedUser;
-    public ListUserPage(IUserService userService, IFileService fileService)
+    public ListUserPage(IFileService fileService)
 	{
 		InitializeComponent();
-        _userService = userService;
         _fileService = fileService;
-
-        _users = new ObservableCollection<User>(_userService.GetAll());
-        UserListView.ItemsSource = _users;
+        LoadUsersFromFile();
     }
 
     private async void Button_Back_Clicked(object sender, EventArgs e)
@@ -31,11 +27,18 @@ public partial class ListUserPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        ReloadedUsers();
+        ReloadUserFromFile();
     }
-    private void ReloadedUsers()
+
+    private void LoadUsersFromFile()
     {
-        var loadedUsers = _userService.GetAll();
+        var loadedUsers = _fileService.LoadList();
+        _users = new ObservableCollection<User>(loadedUsers);
+        UserListView.ItemsSource = _users;
+    }
+    private void ReloadUserFromFile()
+    {
+        var loadedUsers = _fileService.LoadList();
         _users.Clear();
         foreach (var user in loadedUsers)
         {
@@ -55,19 +58,34 @@ public partial class ListUserPage : ContentPage
                 LastName = Entry_LastName.Text,
                 Email = Entry_Email.Text,
                 Adress = Entry_Adress.Text,
-                Postal = Entry_Postal.Text, 
+                Postal = Entry_Postal.Text,
                 Locality = Entry_Locality.Text,
                 Phonenmbr = Entry_Phone.Text
             };
-           
-            _userService.Add(newUser);
-            ReloadedUsers();
+
+            _users.Add(newUser);
+            _fileService.SaveListToFile(_users.ToList());
+
             await DisplayAlert("Success", $"User{newUser.FirstName} {newUser.LastName} {newUser.UserId} created.", "OK");
         }
         else
         {
-            await DisplayAlert("Error", "Please fill in all the fields", "OK");
+
+            _selectedUser.FirstName = Entry_FirstName.Text;
+            _selectedUser.LastName = Entry_LastName.Text;
+            _selectedUser.Email = Entry_Email.Text;
+            _selectedUser.Adress = Entry_Adress.Text;
+            _selectedUser.Postal = Entry_Postal.Text;
+            _selectedUser.Locality = Entry_Locality.Text;
+            _selectedUser.Phonenmbr = Entry_Phone.Text;
+
+            _fileService.SaveListToFile(_users.ToList());
+            await DisplayAlert("Sucess", "Users updated", "ok");
+
+            _selectedUser = null;
+            Button_Create.Text = "Create User";
         }
+        ClearForm();
     }
 
     private void Button_Delete_Clicked(object sender, EventArgs e)
@@ -75,8 +93,8 @@ public partial class ListUserPage : ContentPage
         var user = (sender as Button).BindingContext as User;
         if (user != null)
         {
-            _userService.DeleteUser(user.UserId);
-            ReloadedUsers();
+            _users.Remove(user);
+            _fileService.SaveListToFile(_users.ToList());
         }
     }
 
@@ -87,12 +105,26 @@ public partial class ListUserPage : ContentPage
         {
             Entry_FirstName.Text = _selectedUser.FirstName;
             Entry_LastName.Text = _selectedUser.LastName;
-            Entry_Adress.Text = _selectedUser.FirstName;
-            Entry_Postal.Text = _selectedUser.FirstName;
-            Entry_Locality.Text = _selectedUser.FirstName;
-            Entry_Phone.Text = _selectedUser.FirstName;
+            Entry_Email.Text = _selectedUser.Email;
+            Entry_Adress.Text = _selectedUser.Adress;
+            Entry_Postal.Text = _selectedUser.Postal;
+            Entry_Locality.Text = _selectedUser.Locality;
+            Entry_Phone.Text = _selectedUser.Phonenmbr;
+
             Button_Create.Text = "Update User";
 
         }
+    }
+
+    private void ClearForm() //Megalat Chatgpt genererad. Tömmer textfälten
+    {
+        Entry_FirstName.Text = string.Empty;
+        Entry_LastName.Text = string.Empty;
+        Entry_Email.Text = string.Empty;
+        Entry_Adress.Text = string.Empty;
+        Entry_Postal.Text = string.Empty;
+        Entry_Locality.Text = string.Empty;
+        Entry_Phone.Text = string.Empty;
+        _selectedUser = null;
     }
 }
