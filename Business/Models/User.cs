@@ -12,4 +12,6 @@ public class User
     public string Postal  { get; set; } = null!;
     public string Locality { get; set; } = null!;
     public string Phonenmbr {  get; set; } = null!;
+
+
 }

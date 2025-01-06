@@ -23,8 +23,18 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    Margin="10,0,10,10"
-
                    />
+            <CollectionView x:Name="UserListView" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*, auto, auto" Padding="10">
+                            <Label Text="{Binding FirstName}" Grid.Column="0"></Label>
+                            <Button Text="Edit" Clicked="Button_Edit_Clicked" Grid.Column="1"></Button>
+                            <Button Text="Delete" Clicked="Button_Delete_Clicked" Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="2" Margin="20">
@@ -46,6 +56,12 @@
                 Text="Create User"
                 Clicked="Button_Create_Clicked"
                 />
+            <Button
+               x:Name="Button_EditConfirm"
+               Text="Update User"
+               Clicked="Button_EditConfirm_Clicked"
+                IsVisible="False"
+               />
 
         </VerticalStackLayout>
 
