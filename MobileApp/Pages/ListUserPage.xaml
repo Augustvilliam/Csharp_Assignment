@@ -4,131 +4,49 @@
              x:Class="MobileApp.Pages.ListUserPage"
              Title="ListUserPage">
     
-    <Grid ColumnDefinitions="auto, auto, *" >
+    <Grid ColumnDefinitions="*, *, *" >
         
         <VerticalStackLayout Grid.Column="0" Margin="20">
-            
+
             <Label 
                 Text="Här Kommer massa knappar för alternativ"
                 VerticalOptions="Center" 
+                FontAttributes="Bold"
                 HorizontalOptions="Center" 
                 Margin="10,0,10,10"
-                />
-          
-            <Button
-                x:Name="Button_Create"
-                Text="Creat User"
-                HorizontalOptions="CenterAndExpand"
-                Margin="10,0,10,10"
-                />
-            <Button
-                Text="????"
-                HorizontalOptions="CenterAndExpand"
-                Margin="10,0,10,10"
-                />
-            <Button
-                x:Name="Button_Back"
-                Clicked="Button_Back_Clicked"
-                Text="Return"
-                HorizontalOptions="CenterAndExpand" 
-                Margin="10,0,10,10"
+
                 />
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Column="1" Margin="20">
+        <VerticalStackLayout Grid.Column="1" Margin="10">
+            <Label Text="Existing Users"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="10,0,10,10"
 
-            <Label 
-                 Text="Existing Users"
-                 VerticalOptions="Center" 
-                 HorizontalOptions="Start"
-                />
-            <CollectionView  x:Name="UserListView">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-
-                        <Grid ColumnDefinitions="*, auto, auto" Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Grid.Column="0"  Text="First Name:" />
-                            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding FirstName}" />
-                            <Label Grid.Row="1" Grid.Column="0"  Text="Last Name:" />
-                            <Label Grid.Row="1" Grid.Column="1"  Text="{Binding FirstName}" />
-                            <Label Grid.Row="2" Grid.Column="0"  Text="ID:" />
-                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding UserId}" />
-
-                            <StackLayout Grid.Row="3" Grid.Column="2" Orientation="Horizontal"  HorizontalOptions="Center">
-                                <Button Text="🛠️" Clicked="Button_Edit_Clicked" BindingContext="{Binding}" Margin="20" />
-                                <Button Text="🗑️" Clicked="Button_Delete_Clicked" BindingContext="{Binding}" Margin="20" />
-                            </StackLayout>
-
-
-
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-       
+                   />
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="2" Margin="20">
             <Label 
                  Text="Create User"
+                FontAttributes="Bold"
                  VerticalOptions="Center" 
                  HorizontalOptions="Center"
+                Margin="10,0,10,10"
                 />
             <Entry
                 x:Name="Entry_FirstName"
                 Placeholder="First Name"
                 HorizontalOptions="Fill"
-                Margin="10,0,10,10"
-
+                
                 />
-            
-            <Entry
-                x:Name="Entry_LastName"
-                Placeholder="Last Name"
-                HorizontalOptions="Fill"
-                Margin="10,0,10,10"
-
-                 />
-            <Entry
-               x:Name="Entry_Email"
-               Placeholder="Email"
-               HorizontalOptions="Fill"
-               Margin="10,0,10,10"
-           />
-            <Entry
-               x:Name="Entry_Adress"
-               Placeholder="Adress"
-               HorizontalOptions="Fill"
-               Margin="10,0,10,10"
-           />
-            <Entry
-               x:Name="Entry_Postal"
-               Placeholder="Postal-Code"
-               HorizontalOptions="Fill"
-               Margin="10,0,10,10"
-           />
-            <Entry
-               x:Name="Entry_Locality"
-               Placeholder="Locality"
-               HorizontalOptions="Fill"
-               Margin="10,0,10,10"
-           />
-            <Entry
-               x:Name="Entry_Phone"
-               Placeholder="Phonenumber"
-               HorizontalOptions="Fill"
-               Margin="10,0,10,10"
-           />
             <Button
+                x:Name="Button_Create"
                 Text="Create User"
                 Clicked="Button_Create_Clicked"
                 />
+
         </VerticalStackLayout>
 
     </Grid>

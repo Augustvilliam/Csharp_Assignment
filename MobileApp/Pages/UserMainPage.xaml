@@ -19,6 +19,7 @@
             Clicked="Button_List_Clicked"
             Text="User Overview Menu"
             HorizontalOptions="Center" 
+            Margin="10"
             />
         <Button
             Grid.Row="2"
@@ -26,6 +27,8 @@
             Clicked="Button_Import_Clicked"
             Text="Import/Export Menu!"
             HorizontalOptions="Center"
+            Margin="10"
+
             />
 
         <Button
@@ -34,6 +37,8 @@
             Clicked="Button_Quit_Clicked"
             Text="Exit!"
             HorizontalOptions="Center"
+            Margin="10"
+
             />
 
         </VerticalStackLayout>
