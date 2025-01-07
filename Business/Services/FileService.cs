@@ -12,9 +12,9 @@ public class fileService : IFileService
     private readonly string _filePath;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    public fileService(string directoryPath = "Data", string fileName = "list.json")
+    public fileService(string directoryPath = null, string fileName = "list.json")
     {
-        _directoryPath = directoryPath;
+        _directoryPath = directoryPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyAppData"); //Kolla längst ner tack. 
         _filePath = Path.Combine(_directoryPath, fileName);
         _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
     }
@@ -35,9 +35,11 @@ public class fileService : IFileService
             Debug.WriteLine(ex.Message);
 
         }
+        Debug.WriteLine($"Saving to: {_filePath}");
     }
     public List<User> LoadList()
     {
+
         try
         {
             if (!File.Exists(_filePath))
@@ -45,7 +47,10 @@ public class fileService : IFileService
 
             var json = File.ReadAllText(_filePath);
             var list = JsonSerializer.Deserialize<List<User>>(json, _jsonSerializerOptions);
+            Debug.WriteLine($"Loaded {_filePath} with {list.Count} users.");
             return list ?? new List<User>();
+            
+
         }
         catch (Exception ex)
         {
@@ -56,3 +61,4 @@ public class fileService : IFileService
 
     }
 }
+///Sparas i "My Documents" eftersom att mitt Code använder sin egna datamap i sys32 som defult sparplats. Detta Gav mig ungefär 7 dagar av fucking huvudvärk och nu ÄNTLIGEN tack vare en bra plaserad (TACK CHATGPT) debug.writeline visade det sig att jag inte hade behörighet att spara där. Jag har nu ett förakt för mänskligheten igen.

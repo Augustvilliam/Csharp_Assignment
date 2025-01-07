@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Business.Interfaces;
 using Business.Models;
 
@@ -23,42 +24,41 @@ public partial class ListUserPage : ContentPage
 
     private void LoadUsers()
     {
-        _users = new ObservableCollection<User>(_userService.GetAll());
+        var loadedUsers = _userService.GetAll();
+        _users = new ObservableCollection<User>(loadedUsers);
         UserListView.ItemsSource = _users;
     }
 
     private void ReloadUsers()
     {
+        var loadedUsers = _userService.GetAll().ToList(); // Definiera loadedUsers här
         _users.Clear();
-        foreach (var user in _userService.GetAll())
+        foreach (var user in loadedUsers)
         {
             _users.Add(user);
         }
+        Debug.WriteLine($"Reloading {loadedUsers.Count} users from service.");
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ReloadUsers();
+    }
 
-    private  void Button_EditConfirm_Clicked(object sender, EventArgs e)
+    private void Button_EditConfirm_Clicked(object sender, EventArgs e)
     {
         if (_selectedUser == null)
             return;
         _selectedUser.FirstName = Entry_FirstName.Text;
         _userService.EditUser(_selectedUser.UserId, _selectedUser);
+        _fileService.SaveListToFile(_users.ToList());
 
-        var index = _users.IndexOf(_users.FirstOrDefault(u => u.UserId == _selectedUser.UserId));
-        if (index >= 0)
-        {
-            _users[index] = new User
-            {
-                UserId = _selectedUser.UserId,
-                FirstName = _selectedUser.FirstName
-            };
-        }
         ClearForm();
-
         Button_Create.IsVisible = true;
         Button_EditConfirm.IsVisible = false;
     }
-   
+
 
     private async void Button_Create_Clicked(object sender, EventArgs e)
     {
@@ -76,7 +76,8 @@ public partial class ListUserPage : ContentPage
 
         _userService.Add(newUser);
         _users.Add(newUser);
-  
+        _fileService.SaveListToFile(_users.ToList());
+
 
         Entry_FirstName.Text = string.Empty;
 
@@ -93,7 +94,7 @@ public partial class ListUserPage : ContentPage
                 _users.Remove(user);
             }
         }
-  
+
     }
 
     private void Button_Edit_Clicked(object sender, EventArgs e)
