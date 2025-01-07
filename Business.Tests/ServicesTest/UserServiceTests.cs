@@ -23,7 +23,7 @@ public class UserServiceTests
     public void AddUser_shouldAddUserToList()
     {
         //Arrange
-        var user = new User 
+        var user = new User
         {
             UserId = Guid.NewGuid().ToString(),
             FirstName = "test",
@@ -51,7 +51,7 @@ public class UserServiceTests
         var users = new List<User>
             {
             new User
-                { 
+                {
                     FirstName = "test",
                     LastName = "test",
                     Email = "test@test.test",
@@ -80,7 +80,7 @@ public class UserServiceTests
             new User {UserId ="2", FirstName = "test2"}
 
         };
-        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);   
+        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(users);
         //act
         var user = _userService.GetUserById("1");
         //assert
@@ -102,4 +102,34 @@ public class UserServiceTests
         //assert
         _fileServiceMock.Verify(fs => fs.SaveListToFile(It.Is<List<User>>(u => u.Count == 0)), Times.Once);
     }
+
+    [Fact]
+    public void AddUser_ShouldThrowExceptionIfUserIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => _userService.Add(null));
+    }
+    [Fact]
+    public void EditUser_shouldTrowExceptionIfUserDoesNotExist()
+    {
+        var user = new User { UserId = "nonexistant" };
+        Assert.Throws<InvalidOperationException>(() => _userService.EditUser("nonexistant", user));
+    }
+
+
+    [Fact]
+    public void DeleteUser_ShouldNotThrowIfUserDOesNotExist()
+    {
+        var exception = Record.Exception(() => _userService.DeleteUser("nonexistant"));
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void GetAll_ShouldReturnEmptyListIfNoUserSaved()
+    {
+        _fileServiceMock.Setup(fs => fs.LoadList()).Returns(new List<User>());
+        var users = _userService.GetAll();
+        Assert.NotNull(users);
+        Assert.Empty(users);
+    }
+
 }

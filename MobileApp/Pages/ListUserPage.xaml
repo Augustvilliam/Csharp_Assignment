@@ -9,13 +9,27 @@
         <VerticalStackLayout Grid.Column="0" Margin="20">
 
             <Label 
-                Text="Här Kommer massa knappar för alternativ"
+                Text="User Details"
                 VerticalOptions="Center" 
                 FontAttributes="Bold"
                 HorizontalOptions="Center" 
                 Margin="10,0,10,10"
-
                 />
+            <Label Text="Id:" FontAttributes="Bold" />
+            <Label x:Name=" Label_UserId" />
+            <Label Text="Name:" FontAttributes="Bold" />
+            <Label x:Name=" Label_UserName" />
+            <Label Text="Email:" FontAttributes="Bold" />
+            <Label x:Name=" Label_Email" />
+            <Label Text="Adress:" FontAttributes="Bold" />
+            <Label x:Name=" Label_Adress" />
+            <Label Text="Postal-Code:" FontAttributes="Bold" />
+            <Label x:Name=" Label_Postal" />
+            <Label Text="Locality:" FontAttributes="Bold" />
+            <Label x:Name=" Label_Locality" />
+            <Label Text="Phone Number:" FontAttributes="Bold" />
+            <Label x:Name=" Label_Phone" />
+
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="1" Margin="10">
@@ -24,7 +38,7 @@
                    HorizontalOptions="Center"
                    Margin="10,0,10,10"
                    />
-            <CollectionView x:Name="UserListView" SelectionMode="None">
+            <CollectionView x:Name="UserListView" SelectionMode="Single" SelectionChanged="UsertListView_selectionChanged">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="*, auto, auto" Padding="10">
@@ -49,8 +63,37 @@
                 x:Name="Entry_FirstName"
                 Placeholder="First Name"
                 HorizontalOptions="Fill"
-                
                 />
+            <Entry
+              x:Name="Entry_LastName"
+              Placeholder="Last Name"
+              HorizontalOptions="Fill"              
+              />
+            <Entry
+              x:Name="Entry_Email"
+              Placeholder="Email"
+              HorizontalOptions="Fill"              
+              />
+            <Entry
+              x:Name="Entry_Adress"
+              Placeholder="Adress"
+              HorizontalOptions="Fill"              
+              />
+            <Entry
+              x:Name="Entry_Postal"
+              Placeholder="Postal-Code"
+              HorizontalOptions="Fill"              
+              />
+            <Entry
+              x:Name="Entry_Locality"
+              Placeholder="Locality"
+              HorizontalOptions="Fill"              
+              />
+            <Entry
+              x:Name="Entry_Phone"
+              Placeholder="Phone number"
+              HorizontalOptions="Fill"    
+              />
             <Button
                 x:Name="Button_Create"
                 Text="Create User"

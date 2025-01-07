@@ -8,9 +8,11 @@ namespace Business.Services;
 public class UserManagementService
 {
     private readonly IUserService _userService;
-    public UserManagementService(IUserService userService)
+    private readonly IUserFactory _userFactory;
+    public UserManagementService(IUserService userService, IUserFactory userFactory)
     {
         _userService = userService;
+        _userFactory = userFactory; 
     }
 
     public void ShowMenu()
@@ -24,6 +26,7 @@ public class UserManagementService
             Console.WriteLine("2. Show Existing Users");
             Console.WriteLine("3. Edit User");
             Console.WriteLine("4. Delete User");
+            Console.WriteLine("5. Create Defult User");
             Console.WriteLine("b. Back to Main Menu");
             var option = Console.ReadLine();
 
@@ -40,6 +43,9 @@ public class UserManagementService
                     break;
                 case "4":
                     DeleteUser();
+                    break;
+                case "5":
+                    CreateDefaultUser();
                     break;
                 case "b":
                     return;
@@ -381,6 +387,15 @@ public class UserManagementService
             }
         }
         Console.ReadKey();
+    }
+    private void CreateDefaultUser()
+    {
+        var defaultUser = _userFactory.CreateDefultUser();
+        _userService.Add(defaultUser);
+        Console.WriteLine($"Default User created: {defaultUser.FirstName }{defaultUser.LastName}");
+        Console.ReadKey();
+
+
     }
 }
 

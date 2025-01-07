@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Business.Interfaces;
 using Business.Services;
+using Business.Factory;
 
 
 
@@ -8,6 +9,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IUserService, UserService>()
     .AddSingleton<UserManagementService>()
     .AddSingleton<IFileService, fileService>()
+    .AddSingleton<IUserFactory, UserFactory>()
     .BuildServiceProvider();
 
 var userManagementService = serviceProvider.GetRequiredService<UserManagementService>();

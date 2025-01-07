@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using Business.Factory;
+using Business.Interfaces;
 using Business.Services;
 using Microsoft.Extensions.Logging;
 using MobileApp.Pages;
@@ -19,6 +20,7 @@ public static class MauiProgram
             });
         builder.Services.AddSingleton<IUserService, UserService>();
         builder.Services.AddSingleton<IFileService, fileService>();
+        builder.Services.AddSingleton<IUserFactory, UserFactory>();
         builder.Services.AddSingleton<UserManagementService>();
         builder.Services.AddTransient<ListUserPage>();
         builder.Services.AddTransient<UserImportPage>();

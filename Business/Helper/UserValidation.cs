@@ -13,14 +13,17 @@ public static class UserValidation
     }
     public static bool ValidateEmail(string email)
     { 
+        if (string.IsNullOrWhiteSpace(email)) return false;
         return Regex.IsMatch(email, "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"); //följa enkelt format av x@x.xx
     }
     public static bool ValidatePhone(string phone)
     {
+        if (string.IsNullOrWhiteSpace(phone)) return false;
         return Regex.IsMatch(phone, "^\\d+$"); //endast siffror
     }
     public static bool ValidatePostal(string postal)
     {
+        if (string.IsNullOrWhiteSpace(postal)) return false;
         return Regex.IsMatch(postal, "^\\d+$"); //endast siffror
     }
     public static bool ValidateAdress(string adress)

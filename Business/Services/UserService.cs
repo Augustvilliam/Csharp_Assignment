@@ -15,7 +15,10 @@ public class UserService : IUserService
     }
     public void Add(User user)
     {
-        _users.Add(user);
+        if (user == null) 
+            throw new ArgumentNullException(nameof(user), "User Cannot Be Null");
+
+        _users.Add(user); 
         _fileService.SaveListToFile(_users);
     }
     public IEnumerable<User> GetAll() 
@@ -32,19 +35,23 @@ public class UserService : IUserService
 
     public void EditUser(string id, User updateUser)
     {
+        if (updateUser == null)
+            throw new ArgumentNullException(nameof (updateUser), "Updated User Cannot Be Null");
+       
         var user = GetUserById(id);
-        if (user != null)
-        {
-            user.FirstName = updateUser.FirstName;
-            user.LastName = updateUser.LastName;
-            user.Email = updateUser.Email;
-            user.Adress = updateUser.Adress;
-            user.Postal = updateUser.Postal;
-            user.Locality = updateUser.Locality;
-            user.Phonenmbr = updateUser.Phonenmbr;
+        if (user == null)
+            throw new InvalidOperationException($"User with ID {id} Does not exist.");
+        
+        user.FirstName = updateUser.FirstName;
+        user.LastName = updateUser.LastName;
+        user.Email = updateUser.Email;
+        user.Adress = updateUser.Adress;
+        user.Postal = updateUser.Postal;
+        user.Locality = updateUser.Locality;
+        user.Phonenmbr = updateUser.Phonenmbr;
 
-            _fileService.SaveListToFile(_users);
-        }
+        _fileService.SaveListToFile(_users);
+        
     }
 
     public void DeleteUser(string id)
