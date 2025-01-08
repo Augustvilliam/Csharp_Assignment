@@ -173,7 +173,7 @@ public class UserManagementService
         Console.WriteLine("Press any key to return.");
         Console.ReadKey();
     }
-    private void EditUser() //redigera användare genomm att ange identiskt ID. därav max 5 täcken på id.
+    public void EditUser() //redigera användare genomm att ange identiskt ID. därav max 5 täcken på id.
     {
         Console.Clear();
         Console.WriteLine("Entar a valid User ID to edit.");
@@ -361,7 +361,7 @@ public class UserManagementService
         Console.WriteLine("User updated successfully.");
         Console.ReadKey();
     }
-    private void DeleteUser()
+    public void DeleteUser()
     {
         Console.WriteLine("Please enter the ID of the user you wish to delete.");
         string userId = Console.ReadLine()!;
