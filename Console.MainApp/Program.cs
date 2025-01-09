@@ -2,6 +2,7 @@
 using Business.Interfaces;
 using Business.Services;
 using Business.Factory;
+using Business.Helper;
 
 
 
@@ -10,6 +11,8 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<UserManagementService>()
     .AddSingleton<IFileService, fileService>()
     .AddSingleton<IUserFactory, UserFactory>()
+    .AddTransient<IUserValidation, UserValidation>()
+
     .BuildServiceProvider();
 
 var userManagementService = serviceProvider.GetRequiredService<UserManagementService>();

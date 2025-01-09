@@ -9,6 +9,6 @@ public partial class UserImportPage : ContentPage
 
     private async void Button_Back_Clicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("UserMainPage");
+        await Shell.Current.GoToAsync("///UserMainPage");
     }
 }

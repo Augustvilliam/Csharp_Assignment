@@ -1,6 +1,7 @@
 ﻿
 
 using Business.Factory;
+using Business.Models;
 
 namespace Business.Tests.FactoryTest;
 
@@ -13,20 +14,33 @@ public class UserFactoryTest
         _userFactory = new UserFactory();
     }
     [Fact]
-    public void CreateDefultUser_ShouldReturnDefaultValueUser()
+    public void CreateUserShouldReturnUserWithId()
     {
+
+        //arrange
+        var inputUser = new User
+        {
+            FirstName = "Test",
+            LastName = "Test",
+            Email = "ex@ex.ex",
+            Adress = "test",
+            Postal = "00000",
+            Locality = "test",
+            Phonenmbr = "00000000",
+        };
         //act
-        var user = _userFactory.CreateDefultUser();
+        var createdUser = _userFactory.CreateUser(inputUser);
+
         //assert
-        Assert.NotNull(user);
-        Assert.NotNull(user.UserId);
-        Assert.Equal("sven", user.FirstName);
-        Assert.Equal("Svensson", user.LastName);
-        Assert.Equal("ex@ex.ex", user.Email);
-        Assert.Equal("gatan", user.Adress);
-        Assert.Equal("00000", user.Postal);
-        Assert.Equal("stad", user.Locality);
-        Assert.Equal("0000000000", user.Phonenmbr);
+        Assert.NotNull(createdUser);
+        Assert.NotNull(createdUser.UserId);
+        Assert.Equal(inputUser.FirstName, createdUser.FirstName);
+        Assert.Equal(inputUser.LastName, createdUser.LastName);
+        Assert.Equal(inputUser.Email, createdUser.Email);
+        Assert.Equal(inputUser.Adress, createdUser.Adress);
+        Assert.Equal(inputUser.Postal, createdUser.Postal);
+        Assert.Equal(inputUser.Locality, createdUser.Locality);
+        Assert.Equal(inputUser.Phonenmbr, createdUser.Phonenmbr);
     }
 
 }

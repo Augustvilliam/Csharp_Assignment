@@ -1,12 +1,23 @@
 ﻿
 
 using Business.Helper;
+using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Tests.ServicesTest;
 
 public class UserValidationTests
 {
+    private readonly IUserValidation _userValidation;
+
+    public UserValidationTests()
+    {
+        _userValidation = new UserValidation();
+    }
+
+
+
+
     [Fact]
     public void ValidateShouldReturnTrueForValidUser()
     {
@@ -24,7 +35,7 @@ public class UserValidationTests
         };
 
         //Act
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
         //assert
         Assert.True(result);
         Assert.Equal(string.Empty, errorMessage);
@@ -46,7 +57,7 @@ public class UserValidationTests
             
         };
        //act
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
         //assert
         Assert.False(result);
         Assert.Equal("Invalid email format. Please enter a valid one (e.g., example@example.com).", errorMessage);
@@ -62,7 +73,7 @@ public class UserValidationTests
             FirstName = "",
             LastName = "",
         };
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
         Assert.False(result);
     }
 
@@ -78,7 +89,7 @@ public class UserValidationTests
             Phonenmbr = "BasseFEL.jpg",
         };
         //act
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
 
         //assaert
         Assert.False(result);
@@ -96,7 +107,7 @@ public class UserValidationTests
             Phonenmbr = "909909090",
         };
         ///act
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
         //asset
         Assert.False(result);
         Assert.Equal("Postal code must only contain numbers.", errorMessage);
@@ -114,7 +125,7 @@ public class UserValidationTests
             Postal = "0909",
         };
         ///act
-        var result = UserValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage);
         //asset
         Assert.False(result);
         Assert.Equal("Address cannot be empty.", errorMessage);

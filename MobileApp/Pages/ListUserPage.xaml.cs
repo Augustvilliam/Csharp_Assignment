@@ -12,14 +12,16 @@ public partial class ListUserPage : ContentPage
     private readonly IUserService _userService;
     private readonly IFileService _fileService;
     private readonly IUserFactory _userFactory;
+    private readonly IUserValidation _userValidation;
     private ObservableCollection<User> _users;
     private User _selectedUser;
-    public ListUserPage(IUserService userService, IFileService fileService, IUserFactory userFactory)
+    public ListUserPage(IUserService userService, IFileService fileService, IUserFactory userFactory, IUserValidation userValidation)
     {
         InitializeComponent();
         _userService = userService;
         _fileService = fileService;
         _userFactory = userFactory;
+        _userValidation = userValidation;
         _users = new ObservableCollection<User>(_userService.GetAll());
 
         LoadUsers();
@@ -82,7 +84,7 @@ public partial class ListUserPage : ContentPage
         _selectedUser.Locality = Entry_Locality.Text;
         _selectedUser.Phonenmbr = Entry_Phone.Text;
 
-        if (!UserValidation.ValidateUser(_selectedUser, out string errorMessage))
+        if (!_userValidation.ValidateUser(_selectedUser, out string errorMessage))
         {
             await DisplayAlert("Validation Error", errorMessage, "OK");
             return;
@@ -100,26 +102,27 @@ public partial class ListUserPage : ContentPage
 
     private async void Button_Create_Clicked(object sender, EventArgs e)
     {
+        var inputUser = new User
 
-        var newUser = _userFactory.CreateDefultUser();
+        {
+            FirstName = Entry_FirstName.Text,
+            LastName = Entry_LastName.Text,
+            Email = Entry_Email.Text,
+            Adress = Entry_Adress.Text,
+            Postal = Entry_Postal.Text,
+            Locality = Entry_Locality.Text,
+            Phonenmbr = Entry_Phone.Text,
+        };
 
-        newUser.FirstName = Entry_FirstName.Text;
-        newUser.LastName = Entry_LastName.Text;
-        newUser.Email = Entry_Email.Text;
-        newUser.Adress = Entry_Adress.Text;
-        newUser.Postal = Entry_Postal.Text;
-        newUser.Locality = Entry_Locality.Text;
-        newUser.Phonenmbr = Entry_Phone.Text;
 
 
-
-        if (!UserValidation.ValidateUser(newUser, out string errorMessage))
+        if (!_userValidation.ValidateUser(inputUser, out string errorMessage))
         {
             await DisplayAlert(" Validation Error", errorMessage, "ok");
             return;
         }
 
-
+        var newUser = _userFactory.CreateUser(inputUser);
 
         _userService.Add(newUser);
         _users.Add(newUser);
@@ -188,7 +191,7 @@ public partial class ListUserPage : ContentPage
         Entry_Postal.Text = string.Empty;
         Entry_Locality.Text = string.Empty;
         Entry_Phone.Text = string.Empty;
-        _selectedUser = null;
+        _selectedUser = null!;
 
     }
     private void ClearUserDetails()

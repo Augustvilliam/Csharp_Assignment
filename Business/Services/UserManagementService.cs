@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using Business.Helper;
 using Business.Interfaces;
 using Business.Models;
@@ -9,10 +10,12 @@ public class UserManagementService
 {
     private readonly IUserService _userService;
     private readonly IUserFactory _userFactory;
-    public UserManagementService(IUserService userService, IUserFactory userFactory)
+    private readonly IUserValidation _userValidation;
+    public UserManagementService(IUserService userService, IUserFactory userFactory, IUserValidation userValidation)
     {
         _userService = userService;
-        _userFactory = userFactory; 
+        _userFactory = userFactory;
+        _userValidation = userValidation;
     }
 
     public void ShowMenu()
@@ -26,7 +29,6 @@ public class UserManagementService
             Console.WriteLine("2. Show Existing Users");
             Console.WriteLine("3. Edit User");
             Console.WriteLine("4. Delete User");
-            Console.WriteLine("5. Create Defult User");
             Console.WriteLine("b. Back to Main Menu");
             var option = Console.ReadLine();
 
@@ -44,9 +46,6 @@ public class UserManagementService
                 case "4":
                     DeleteUser();
                     break;
-                case "5":
-                    CreateDefaultUser();
-                    break;
                 case "b":
                     return;
                 default:
@@ -63,7 +62,7 @@ public class UserManagementService
         Console.WriteLine("Enter User details:");
         
 
-        User user = new()
+        User inputUser = new()
         {
            UserId = IdGenerator.GenerateShortId(5),
         };
@@ -73,82 +72,82 @@ public class UserManagementService
         do
         {
             Console.WriteLine("Please Enter your first name.");
-            user.FirstName = Console.ReadLine()!;
-            if (!UserValidation.ValidateName(user.FirstName))
+            inputUser.FirstName = Console.ReadLine()!;
+            if (!_userValidation.ValidateName(inputUser.FirstName))
             {
                 Console.WriteLine("First name must contain at least 2 characters.");
             }
-        } while (!UserValidation.ValidateName(user.FirstName));
+        } while (!_userValidation.ValidateName(inputUser.FirstName));
 
         //Efternamn
 
         do
         {
             Console.WriteLine("Please Enter your Last name.");
-            user.LastName = Console.ReadLine()!;
-            if (!UserValidation.ValidateName(user.LastName))
+            inputUser.LastName = Console.ReadLine()!;
+            if (!_userValidation.ValidateName(inputUser.LastName))
             {
                 Console.WriteLine("Last name must contain at least 2 characters.");
             }
-        } while (!UserValidation.ValidateName(user.LastName));
+        } while (!_userValidation.ValidateName(inputUser.LastName));
 
 
         //Email
         do
         {
             Console.WriteLine("Please Enter your Email.");
-            user.Email = Console.ReadLine()!;
-            if (!UserValidation.ValidateEmail(user.Email))
+            inputUser.Email = Console.ReadLine()!;
+            if (!_userValidation.ValidateEmail(inputUser.Email))
             {
                 Console.WriteLine("Your email adress is invalid. Please enter a valid one using the following format e.g Example@example.ex ");
             }
-        } while (!UserValidation.ValidateEmail(user.Email));
+        } while (!_userValidation.ValidateEmail(inputUser.Email));
   
         //Adress
         do
         {
             Console.WriteLine("Please Enter your Adress.");
-            user.Adress = Console.ReadLine()!;
-            if (!UserValidation.ValidateAdress(user.Adress))
+            inputUser.Adress = Console.ReadLine()!;
+            if (!_userValidation.ValidateAdress(inputUser.Adress))
             {
                 Console.WriteLine("Your adress is not valid.");
             }
-        } while (!UserValidation.ValidateAdress(user.Adress));
+        } while (!_userValidation.ValidateAdress(inputUser.Adress));
 
         //Postkod
         do
         {
             Console.WriteLine("Please Enter your Postal-code.");
-            user.Postal = Console.ReadLine()!;
-            if (!UserValidation.ValidatePostal(user.Postal))
+            inputUser.Postal = Console.ReadLine()!;
+            if (!_userValidation.ValidatePostal(inputUser.Postal))
             {
                 Console.WriteLine("Your postal-code should only include numbers.");
             }
-        } while (!UserValidation.ValidatePostal(user.Postal));
+        } while (!_userValidation.ValidatePostal(inputUser.Postal));
 
         //Ort
         do
         {
             Console.WriteLine("Please Enter your Locality.");
-            user.Locality = Console.ReadLine()!;
-            if (!UserValidation.ValidateLocality(user.Locality))
+            inputUser.Locality = Console.ReadLine()!;
+            if (!_userValidation.ValidateLocality(inputUser.Locality))
             {
                 Console.WriteLine("Your locality must be atleast 2 letters long.");
             }
-        } while (!UserValidation.ValidateLocality(user.Locality));
+        } while (!_userValidation.ValidateLocality(inputUser.Locality));
 
         //Telefonnummer
         do
         {
             Console.WriteLine("Please Enter your Phone number.");
-            user.Phonenmbr = Console.ReadLine()!;
-            if (!UserValidation.ValidatePhone(user.Phonenmbr))
+            inputUser.Phonenmbr = Console.ReadLine()!;
+            if (!_userValidation.ValidatePhone(inputUser.Phonenmbr))
             {
                 Console.WriteLine("Your Phonenumber must only contain digits.");
             }
-        } while (!UserValidation.ValidatePhone(user.Phonenmbr));
+        } while (!_userValidation.ValidatePhone(inputUser.Phonenmbr));
 
-        _userService.Add(user);
+        _userService.Add(inputUser);
         
         Console.WriteLine("User created successfully. Press any key to continue.");
         Console.ReadKey();
@@ -195,7 +194,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidateName(input))
+                if (_userValidation.ValidateName(input))
                 {
                     user.FirstName = input;
                     break;
@@ -215,18 +214,18 @@ public class UserManagementService
         do
         {
             Console.WriteLine($"Current Last Name: {user.LastName}");
-            Console.WriteLine("Enter a new first name. Or leave blank if you wish for it to remain the same.");
+            Console.WriteLine("Enter a new Last name. Or leave blank if you wish for it to remain the same.");
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidateName(input))
+                if (_userValidation.ValidateName(input))
                 {
                     user.LastName = input;
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Your first name must be aleast two characters long.");
+                    Console.WriteLine("Your Last name must be aleast two characters long.");
                 }
             }
             else
@@ -243,7 +242,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidateEmail(input))
+                if (_userValidation.ValidateEmail(input))
                 {
                     user.FirstName = input;
                     break;
@@ -267,7 +266,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidateAdress(input))
+                if (_userValidation.ValidateAdress(input))
                 {
                     user.FirstName = input;
                     break;
@@ -291,7 +290,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidatePostal(input))
+                if (_userValidation.ValidatePostal(input))
                 {
                     user.FirstName = input;
                     break;
@@ -315,7 +314,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidateLocality(input))
+                if (_userValidation.ValidateLocality(input))
                 {
                     user.FirstName = input;
                     break;
@@ -339,7 +338,7 @@ public class UserManagementService
             string input = Console.ReadLine()!;
             if (!string.IsNullOrEmpty(input))
             {
-                if (UserValidation.ValidatePhone(input))
+                if (_userValidation.ValidatePhone(input))
                 {
                     user.FirstName = input;
                     break;
@@ -388,15 +387,7 @@ public class UserManagementService
         }
         Console.ReadKey();
     }
-    private void CreateDefaultUser()
-    {
-        var defaultUser = _userFactory.CreateDefultUser();
-        _userService.Add(defaultUser);
-        Console.WriteLine($"Default User created: {defaultUser.FirstName }{defaultUser.LastName}");
-        Console.ReadKey();
 
-
-    }
 }
 
 

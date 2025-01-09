@@ -2,40 +2,41 @@
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Business.Interfaces;
 using Business.Models;
 namespace Business.Helper;
 
-public static class UserValidation
+public  class UserValidation : IUserValidation
 {
-    public static bool ValidateName(string name)
+    public  bool ValidateName(string name)
     {
         return !string.IsNullOrWhiteSpace(name) && name.Length >= 2; //måste innehålla 2 tecken
     }
-    public static bool ValidateEmail(string email)
+    public  bool ValidateEmail(string email)
     { 
         if (string.IsNullOrWhiteSpace(email)) return false;
         return Regex.IsMatch(email, "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"); //följa enkelt format av x@x.xx
     }
-    public static bool ValidatePhone(string phone)
+    public  bool ValidatePhone(string phone)
     {
         if (string.IsNullOrWhiteSpace(phone)) return false;
         return Regex.IsMatch(phone, "^\\d+$"); //endast siffror
     }
-    public static bool ValidatePostal(string postal)
+    public  bool ValidatePostal(string postal)
     {
         if (string.IsNullOrWhiteSpace(postal)) return false;
         return Regex.IsMatch(postal, "^\\d+$"); //endast siffror
     }
-    public static bool ValidateAdress(string adress)
+    public  bool ValidateAdress(string adress)
     {
         return !string.IsNullOrWhiteSpace(adress);//Ej vara tom
     }
-    public static bool ValidateLocality(string locality)
+    public bool ValidateLocality(string locality)
     {
         return !string.IsNullOrWhiteSpace(locality); //Ej vara tom 
     }
 
-    public static bool ValidateUser(User user, out string errorMessage)
+    public bool ValidateUser(User user, out string errorMessage)
     {
         if (!ValidateName(user.FirstName))
         {
