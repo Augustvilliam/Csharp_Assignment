@@ -11,13 +11,13 @@ namespace Business.Factory;
 
 public class UserFactory : IUserFactory
 {
-
+    //tar in användardata för en creatuser 
     public User CreateUser(User inputUser)
     {
         if (inputUser == null) throw new ArgumentNullException(nameof(inputUser));
         return new User
         {
-            UserId = IdGenerator.GenerateShortId(),
+            UserId = IdGenerator.GenerateShortId(), //tar in GenerateShortID för att generera ett kortare id (Ingen vill knappa in 32 täcken för att hitta en användare)
             FirstName = inputUser.FirstName,
             LastName = inputUser.LastName,
             Email = inputUser.Email,

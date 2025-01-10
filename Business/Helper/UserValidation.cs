@@ -6,7 +6,7 @@ using Business.Interfaces;
 using Business.Models;
 namespace Business.Helper;
 
-public  class UserValidation : IUserValidation
+public  class UserValidation : IUserValidation //standard validering för användardetaljer, Locality och adress är egentligen suboptimalt men jag orkar inte riktigt bry mig. själva regex är generarad av ChatGPT. 
 {
     public  bool ValidateName(string name)
     {

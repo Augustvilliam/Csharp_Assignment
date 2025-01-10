@@ -7,7 +7,7 @@ namespace Business.Tests.HelperTest;
 public class IdGeneratorTests
 {
     [Fact]
-    public void GenerateShorIdShoudReturnTrimmedId()
+    public void GenerateShorIdShoudReturnTrimmedId() //kollar så att den faktiskt generar ett ID på 5 täcken. 
     {
         //act
         var id = IdGenerator.GenerateShortId(5); //lätt att byta trimmat (5 täcken) till längre vid brist eller om det skulle uppstå dubbletter.

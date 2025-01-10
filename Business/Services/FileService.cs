@@ -6,20 +6,20 @@ using Business.Models;
 
 namespace Business.Services;
 
-public class fileService : IFileService
+public class FileService : IFileService
 {
     private readonly string _directoryPath;
     private readonly string _filePath;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    public fileService(string directoryPath = null, string fileName = "list.json")
+    public FileService(string directoryPath = null, string fileName = "list.json")
     {
         _directoryPath = directoryPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyAppData"); //Kolla längst ner tack. 
         _filePath = Path.Combine(_directoryPath, fileName);
         _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
     }
 
-    public void SaveListToFile<T>(List<T> list)
+    public void SaveListToFile<T>(List<T> list) //spara listan till json så att den går att 1, visa upp och också spara mellan sesionerna 
     {
         try
         {
@@ -37,7 +37,7 @@ public class fileService : IFileService
         }
         Debug.WriteLine($"Saving to: {_filePath}");
     }
-    public List<User> LoadList()
+    public List<User> LoadList() //ladda listan, om den existerar.
     {
 
         try

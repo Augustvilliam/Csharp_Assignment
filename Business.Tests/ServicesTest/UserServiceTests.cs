@@ -20,10 +20,10 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void AddUser_shouldAddUserToList()
+    public void AddUser_shouldAddUserToList() //kollar så att Adduser metoden lägger till en användare i lisatn 
     {
         //Arrange
-        var user = new User
+        var user = new User //skapar användare
         {
             UserId = Guid.NewGuid().ToString(),
             FirstName = "test",
@@ -37,15 +37,15 @@ public class UserServiceTests
         };
 
         //Act
-        _userService.Add(user);
+        _userService.Add(user); //lägger till användaren 
 
         //Assert
-        _fileServiceMock.Verify(fs => fs.SaveListToFile(It.IsAny<List<User>>()), Times.Once);
+        _fileServiceMock.Verify(fs => fs.SaveListToFile(It.IsAny<List<User>>()), Times.Once); //kollar att den lägger till användaren i listan. 
 
     }
 
     [Fact]
-    public void GetAll_ShouldReturnUsers()
+    public void GetAll_ShouldReturnUsers() //kollar så alla använadarna listat när den kallas via GetAll. Grunden gjord med chatGPT
     {
         //arrange
         var users = new List<User>
@@ -71,7 +71,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void GetUserById_Should_Return_Correct_User()
+    public void GetUserById_Should_Return_Correct_User() //kollar att korrekt användare plockas när man använder Id till den. 
     {
         //arrange
         var users = new List<User>
@@ -89,7 +89,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void DeleteUserShouldRemoveUserFromList()
+    public void DeleteUserShouldRemoveUserFromList() // kollar så att användare faktiskt tas bort on inte bara ignoreras. 
     {
         //Arrange
         var user = new User { UserId = "1", FirstName = "test" };
@@ -104,12 +104,12 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void AddUser_ShouldThrowExceptionIfUserIsNull()
+    public void AddUser_ShouldThrowExceptionIfUserIsNull() //kolla så appen inte crashar ifall dett användren inte skulle vara fullständning, utan ger ett error istället
     {
         Assert.Throws<ArgumentNullException>(() => _userService.Add(null));
     }
     [Fact]
-    public void EditUser_shouldTrowExceptionIfUserDoesNotExist()
+    public void EditUser_shouldTrowExceptionIfUserDoesNotExist() //samma som ovan fast med edit. 
     {
         var user = new User { UserId = "nonexistant" };
         Assert.Throws<InvalidOperationException>(() => _userService.EditUser("nonexistant", user));
@@ -117,14 +117,14 @@ public class UserServiceTests
 
 
     [Fact]
-    public void DeleteUser_ShouldNotThrowIfUserDOesNotExist()
+    public void DeleteUser_ShouldNotThrowIfUserDOesNotExist() //så appen inte crashar om användaren inte skulle existera. 
     {
         var exception = Record.Exception(() => _userService.DeleteUser("nonexistant"));
         Assert.Null(exception);
     }
 
     [Fact]
-    public void GetAll_ShouldReturnEmptyListIfNoUserSaved()
+    public void GetAll_ShouldReturnEmptyListIfNoUserSaved() //Ser till att listan är tom om det inte finns användare
     {
         _fileServiceMock.Setup(fs => fs.LoadList()).Returns(new List<User>());
         var users = _userService.GetAll();

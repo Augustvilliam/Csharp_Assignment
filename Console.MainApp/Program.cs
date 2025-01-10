@@ -6,10 +6,10 @@ using Business.Helper;
 
 
 
-var serviceProvider = new ServiceCollection()
+var serviceProvider = new ServiceCollection() //laddar in allt med DI, första 3 raderna generarades med chatGPT, resten är tilllagd för hand. 
     .AddSingleton<IUserService, UserService>()
     .AddSingleton<UserManagementService>()
-    .AddSingleton<IFileService, fileService>()
+    .AddSingleton<IFileService, FileService>()
     .AddSingleton<IUserFactory, UserFactory>()
     .AddTransient<IUserValidation, UserValidation>()
 
@@ -24,4 +24,3 @@ userManagementService.ShowMenu();
 
 
 
-//Hela detta kodstycket generarat av ChatGPT .4o då jag var lat.

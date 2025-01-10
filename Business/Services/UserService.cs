@@ -4,7 +4,7 @@ using Business.Models;
 
 namespace Business.Services;
 
-public class UserService : IUserService
+public class UserService : IUserService //userService. Här hanteras saker som add, lägga till i listan, hämta upp en User via I, edit och delete 
 {
     private List<User> _users = new();
     private readonly IFileService _fileService;

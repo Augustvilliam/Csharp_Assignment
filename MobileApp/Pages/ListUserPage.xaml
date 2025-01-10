@@ -4,6 +4,7 @@
              x:Class="MobileApp.Pages.ListUserPage"
              Title="ListUserPage"
              Background="{StaticResource Gray900}"
+             Shell.NavBarIsVisible="False"
 
              >
     

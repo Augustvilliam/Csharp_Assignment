@@ -4,6 +4,8 @@
              x:Class="MobileApp.Pages.UserMainPage"
              Title="User Main Page" 
              Background="{StaticResource Gray900}"
+             Shell.NavBarIsVisible="False"
+
              >
     
     <Grid RowDefinitions="auto, auto, auto, auto">

@@ -360,19 +360,19 @@ public class UserManagementService
         Console.WriteLine("User updated successfully.");
         Console.ReadKey();
     }
-    public void DeleteUser()
+    public void DeleteUser() //Tar bor användare med hjälp av id. 
     {
         Console.WriteLine("Please enter the ID of the user you wish to delete.");
         string userId = Console.ReadLine()!;
 
-        var user = _userService.GetUserById(userId);
+        var user = _userService.GetUserById(userId); //tar in ett userId och väljer därefter rätt userobjekt. 
         if (user == null)
         {
             Console.WriteLine("User not found.");
         }
         else
         {
-            Console.WriteLine($"Are you sure you want to delete user {user.UserId} {user.FirstName} {user.LastName}? y/n");
+            Console.WriteLine($"Are you sure you want to delete user {user.UserId} {user.FirstName} {user.LastName}? y/n"); //dubbelkolla om man verkligen vill ta bort sagd användare , visar För och efter samt id så man är extra säker på att rätt användare valts.
             string confirm = Console.ReadLine()!;
             if (confirm.ToLower() == "y")
             {

@@ -30,7 +30,7 @@ public class UserManagementServiceTests
   
     
     [Fact]
-     public void CreateUserShouldReturnValidUser()
+     public void CreateUserShouldReturnValidUser() //kollar så att CreateUser gör ett korrekt objekt med datan den får in. Grunden gjort med chatGPT
     {
         //arrange 
         var inputUser = new User

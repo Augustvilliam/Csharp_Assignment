@@ -19,7 +19,7 @@ public class UserValidationTests
 
 
     [Fact]
-    public void ValidateShouldReturnTrueForValidUser()
+    public void ValidateShouldReturnTrueForValidUser() //kollar så att användaren valideras.
     {
         //arrange
         var user = new User
@@ -42,14 +42,14 @@ public class UserValidationTests
     }
     
     [Fact]
-    public void ValidateShouldReturnFalseForInvalidEmail()
+    public void ValidateShouldReturnFalseForInvalidEmail() //kollar så att användaren blir invalid ifall Email inte ska vara rätt 
     {
         //arrange
         var user = new User
         {
             FirstName = "test",
             LastName = "test",
-            Email = "BasseNEJ.jpg",
+            Email = "BrasseFEL.jpg", //FEL FEL FEL FEL
             Adress = "test",
             Locality= "test",
             Postal= "1111",
@@ -57,7 +57,7 @@ public class UserValidationTests
             
         };
        //act
-        var result = _userValidation.ValidateUser(user, out var errorMessage);
+        var result = _userValidation.ValidateUser(user, out var errorMessage); //error när den ser att det är brasse som är i emailen och inte en emailadress
         //assert
         Assert.False(result);
         Assert.Equal("Invalid email format. Please enter a valid one (e.g., example@example.com).", errorMessage);
@@ -65,7 +65,7 @@ public class UserValidationTests
 
 
     [Fact]
-    public void ValidateShouldReturnFalseIfRequiredFieldsAreMissing()
+    public void ValidateShouldReturnFalseIfRequiredFieldsAreMissing() //terstar så den felar rätt om saker inte är ifylda.
     {
        
         var user = new User
@@ -78,7 +78,7 @@ public class UserValidationTests
     }
 
     [Fact]
-    public void ValidateShouldReturnFalseIfPhoneInvalid()
+    public void ValidateShouldReturnFalseIfPhoneInvalid() //samma som ovan fast med telefonnummer och inte email.
     {
         //arrange
         var user = new User
@@ -86,7 +86,7 @@ public class UserValidationTests
             FirstName = "test",
             LastName = "test",
             Email = "xx@xx.xx",
-            Phonenmbr = "BasseFEL.jpg",
+            Phonenmbr = "BrasseFel.jpg",
         };
         //act
         var result = _userValidation.ValidateUser(user, out var errorMessage);
@@ -96,14 +96,15 @@ public class UserValidationTests
         Assert.Equal("Phone number must only contain numbers.", errorMessage);
     }
     [Fact]
-    public void ValidateShouldReturnFalseIfInvalidPostal()
+    public void ValidateShouldReturnFalseIfInvalidPostal()  // samma är fast med postkod 
     {
+        //arrange
         var user = new User
         {
             FirstName = "test",
             LastName = "test",
             Email = "xx@xx.xx",
-            Postal = "BasseFEL.jpg",
+            Postal = "BrasseFEL.jpg",
             Phonenmbr = "909909090",
         };
         ///act
@@ -113,8 +114,9 @@ public class UserValidationTests
         Assert.Equal("Postal code must only contain numbers.", errorMessage);
     }
     [Fact]
-    public void ValidateShouldReturnFalseIfFieldEmpty()
+    public void ValidateShouldReturnFalseIfFieldEmpty() //Samma här fast med tomma fält.  
     {
+        //assert
         var user = new User
         {
             FirstName = "test",

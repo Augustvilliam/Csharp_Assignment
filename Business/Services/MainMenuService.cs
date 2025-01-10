@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class MainMenuService
+public class MainMenuService //huvudmeny , leder till import och user menyn 
 {
     private readonly UserManagementService _userManagmentService;
     private readonly ImportExportService _importExportService;

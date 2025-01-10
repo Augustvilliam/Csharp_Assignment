@@ -32,9 +32,4 @@
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MobileAppTests\" />
-    <Folder Include="ModelsTest\" />
-  </ItemGroup>
-
 </Project>

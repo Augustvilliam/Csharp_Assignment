@@ -26,7 +26,7 @@ public partial class ListUserPage : ContentPage
 
     }
 
-    private void LoadUsers()
+    private void LoadUsers() //laddar in användare fron GetAll i en observalbleCollection, Catchar om något gick lite snett Mycket ChatGPT här
     {
         try
         {
@@ -41,8 +41,7 @@ public partial class ListUserPage : ContentPage
              
         }
     }
-
-    private void ReloadUsers()
+    private void ReloadUsers() //rensar, laddar in och laddar om användarlistan för att uppdatera gränsslittet.Mycket ChatGPT här
     {
         try
         {
@@ -62,14 +61,12 @@ public partial class ListUserPage : ContentPage
 
  
     }
-
-    protected override void OnAppearing()
+    protected override void OnAppearing() //Hjälpmetod som gjordes för att hålla allt grafiskt uppdaterat vid användarhanteringen. Mycket ChatGPT här, på LoadUSAer och RelaodUSer
     {
         base.OnAppearing();
         ReloadUsers();
     }
-
-    private async void Button_EditConfirm_Clicked(object sender, EventArgs e)
+    private async void Button_EditConfirm_Clicked(object sender, EventArgs e) //tar och bekräftar knapptrycket för Edituser knappen (pennan) Gör den edit user som i sin tur slänger den till editUser och sparar ner den så allt är i sin ordningn innan den sparar ner den. 
     {
         if (_selectedUser == null)
             return;
@@ -99,8 +96,7 @@ public partial class ListUserPage : ContentPage
     {
         await Shell.Current.GoToAsync("///UserMainPage");
     }
-
-    private async void Button_Create_Clicked(object sender, EventArgs e)
+    private async void Button_Create_Clicked(object sender, EventArgs e) //Create user knappen, tar in all användar data från fälten och tilldelar dom till rätt parameter, är något som det inte ska? Till invalidsuer med dig. är allt i sin ordning? Grattis du har ni en plats i listan.
     {
         var inputUser = new User
 
@@ -126,11 +122,10 @@ public partial class ListUserPage : ContentPage
         await DisplayAlert("Sucess", "User was created", "ok");
         ClearForm();
 
-    }
-
-    private async void Button_Delete_Clicked(object sender, EventArgs e)
+    } //
+    private async void Button_Delete_Clicked(object sender, EventArgs e) // Delete knappen tar in en user (den man har klickat på) på den användaren sagd deleteknapp siter på. En displayalert som varnar dig vad du håller på med. sen går gamla vanliga vägen till delete user via Id.
     {
-        if ((sender as Button)?.BindingContext is User user)
+        if (sender is Button { BindingContext: User user })
         {
             bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {user.FirstName}?", "Yes", "No");
             if (confirm)
@@ -141,8 +136,7 @@ public partial class ListUserPage : ContentPage
         }
 
     }
-
-    private  void Button_Edit_Clicked(object sender, EventArgs e)
+    private  void Button_Edit_Clicked(object sender, EventArgs e) //funktionen för att faktiskt välja envändaren som ska redigeras. tar in vald user och slänger in infon i create fältet och byter ut knappen mot edit istället. 
     {
         if ((sender as Button)?.BindingContext is User user)
         {
@@ -155,16 +149,15 @@ public partial class ListUserPage : ContentPage
             Entry_Locality.Text = _selectedUser.Locality;
             Entry_Phone.Text = _selectedUser.Phonenmbr;
 
-            Button_Create.IsVisible = false;
-            Button_EditConfirm.IsVisible = true;
+            Button_Create.IsVisible = false; //döljer create
+            Button_EditConfirm.IsVisible = true; //Visar Edit comfirm.
         }
 
     }
-
-    private void UsertListView_selectionChanged(object sender, SelectionChangedEventArgs e)
+    private void UsertListView_selectionChanged(object sender, SelectionChangedEventArgs e) //gjord med chat gpt. Visar urvalet av users(om det finns några) där man kan välja
     {
-        if (e.CurrentSelection.FirstOrDefault() is User selectedUser)
-        {
+        if (e.CurrentSelection.FirstOrDefault() is User selectedUser) //hämtar första objeket från listan. om det inte finns  är det null. om användare blir vald blir den tilldelad selected user, och är det en giltig användare går den vidare till if satsen.
+        {//Tilldelar användar uppgifterna till Anänvaruppgifterna i user details listan på högra sidan av användardelen 
             Label_UserId.Text = selectedUser.UserId;
             Label_UserName.Text = $"{selectedUser.FirstName} {selectedUser.LastName}";
             Label_Email.Text = selectedUser.Email;
@@ -173,12 +166,12 @@ public partial class ListUserPage : ContentPage
             Label_Locality.Text = selectedUser.Locality;
             Label_Phone.Text = selectedUser.Phonenmbr;
         }
-        else
+        else//ingen användare vald? ingen lista med uppgifter för dig. 
         {
             ClearUserDetails();
         }
     }
-    private void ClearForm()
+    private void ClearForm()//rensar samtliga användarfält. 
     {
         Entry_FirstName.Text = string.Empty;
         Entry_LastName.Text = string.Empty;
@@ -199,7 +192,7 @@ public partial class ListUserPage : ContentPage
         _selectedUser = null!;
 
     }
-    private void ClearUserDetails()
+    private void ClearUserDetails()//sätter användarfälten till tomman.  
     {
         Label_UserId.Text = string.Empty;   
         Label_UserName.Text = string.Empty;
@@ -209,7 +202,7 @@ public partial class ListUserPage : ContentPage
         Label_Locality.Text = string.Empty;
         Label_Phone.Text = string.Empty;
     }
-    private bool ValidateInputUser(User user, out string errorMessage)
+    private bool ValidateInputUser(User user, out string errorMessage) //använader validateUser för att validera användarna. 
     {
         if (!_userValidation.ValidateUser(user, out errorMessage))
         {
@@ -218,27 +211,26 @@ public partial class ListUserPage : ContentPage
         }
         return true;
     }
-
-    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)  // för att hantera  Errorlabels till create och update user. mest chatGPT här.
     {
         if (sender is Entry entry)
         {
             if (string.IsNullOrWhiteSpace(e.NewTextValue))
             {
                 // Dölj felmeddelande om fältet är tomt
-                var emptyErrorLabel = GetErrorLabel(entry);
+                var emptyErrorLabel = GetErrorLabel(entry); 
                 if (emptyErrorLabel != null)
                 {
                     emptyErrorLabel.IsVisible = false;
                 }
-                else
+                else //om något skulle bli fel får man en debug writeline
                 {
                     Debug.WriteLine($"Error: No matching label found for entry {entry.Placeholder}");
                 }
                 return;
             }
 
-            var errorLabel = GetErrorLabel(entry);
+            var errorLabel = GetErrorLabel(entry); 
             if (errorLabel == null)
             {
                 Debug.WriteLine($"Error: No matching label found for entry {entry.Placeholder}");
@@ -247,14 +239,11 @@ public partial class ListUserPage : ContentPage
 
             bool isValid = ValidateEntry(entry, e.NewTextValue);
 
-            errorLabel.IsVisible = !isValid;
+            errorLabel.IsVisible = !isValid; //sätter errorlabel till synlig om något fält är invalid. 
             errorLabel.Text = !isValid ? GetValidationMessage(entry) : string.Empty;
         }
     }
-
-
-
-    private Label GetErrorLabel(Entry entry)
+    private Label GetErrorLabel(Entry entry) //hämtar upp en errorlabel beronde på vilken entry som inte är giltig 
     {
         return entry == Entry_FirstName ? Label_FirstNameError :
        entry == Entry_LastName ? Label_LastNameError :
@@ -264,7 +253,7 @@ public partial class ListUserPage : ContentPage
        entry == Entry_Locality ? Label_LocalityError :
        entry == Entry_Phone ? Label_PhoneError : null!;
     }
-    private bool ValidateEntry (Entry entry, string value)
+    private bool ValidateEntry (Entry entry, string value) //hjälper till med valideringen av samtliga entrys.
     {
         return entry == Entry_FirstName ? _userValidation.ValidateName(value) :
          entry == Entry_LastName ? _userValidation.ValidateName(value) :
@@ -274,7 +263,7 @@ public partial class ListUserPage : ContentPage
          entry == Entry_Locality ? _userValidation.ValidateLocality(value) :
          entry == Entry_Phone ? _userValidation.ValidatePhone(value) : true;
     }
-    private string GetValidationMessage(Entry entry)
+    private string GetValidationMessage(Entry entry) // text för till hörande entry som inte är valid. 
     {
         return entry == Entry_FirstName ? "First name must contain at least 2 characters." :
                entry == Entry_LastName ? "Last name must contain at least 2 characters." :

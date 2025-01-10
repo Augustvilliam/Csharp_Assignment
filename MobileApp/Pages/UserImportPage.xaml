@@ -4,14 +4,17 @@
              x:Class="MobileApp.Pages.UserImportPage"
              Title="UserImportPage"
              Background="{StaticResource Gray900}"
-
+             Shell.NavBarIsVisible="False"
              >
              
     <VerticalStackLayout>
         <Label 
-            Text="Sorry hans här finns inget. Fanns inte tid över att implementra, men hey Back knappen funkar iaf så det är något :)"
+            Text="Sorry hans här finns inget. Fanns inte tid över att implementra, men hey Back knappen funkar iaf så det är något men du ser iaf att det går att navigera mellan sidorna felfritt :)"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="20"
+            FontAttributes="Bold"
+            />
 
         <Button
          x:Name="Button_Back"

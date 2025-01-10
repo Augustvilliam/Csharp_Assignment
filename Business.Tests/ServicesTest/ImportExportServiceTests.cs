@@ -22,7 +22,7 @@ public class ImportExportServiceTests
     }
 
     [Fact]
-    public void SaveListToFile_ShouldCreateJsonFileWithCorrectContent()
+    public void SaveListToFile_ShouldCreateJsonFileWithCorrectContent() //testar att den skapar Json med rätt data. Grund Genererad av Chatgpt
     {
         //arrange
         var testList = new List<User>
@@ -46,7 +46,7 @@ public class ImportExportServiceTests
 
     }
     [Fact]
-    public void LoadListFromFile_ShouldReturnDeserializedList_whenFileExists()
+    public void LoadListFromFile_ShouldReturnDeserializedList_whenFileExists() //kollar att den läser in Jsonlistan för att lista upp användardatan. Grund Genererad av Chatgpt
     {
         //arrange
         var testList = new List<User>
@@ -69,7 +69,7 @@ public class ImportExportServiceTests
     }
 
     [Fact]
-    public void LoadListFromFile_ShouldReturnEmpty_WhenFileDoesNotExist()
+    public void LoadListFromFile_ShouldReturnEmpty_WhenFileDoesNotExist() //testar att listan är tom ifall det inte finns en lista. generarad av ChatGPT
     {
 
         //Arrange

@@ -7,7 +7,7 @@ namespace Business.Tests.FactoryTest;
 
 public class UserFactoryTest
 {
-    private readonly UserFactory _userFactory;
+    private readonly UserFactory _userFactory; //testar att den faktiskt tar in användardata och slänger på ett id för att skapa en komplett användare. Grundstruktur Genererard av chatGPT
 
     public UserFactoryTest()
     {

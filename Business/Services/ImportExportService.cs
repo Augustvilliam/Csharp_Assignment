@@ -5,7 +5,7 @@ using Business.Models;
 
 namespace Business.Services;
 
-public class ImportExportService : IImportExportService
+public class ImportExportService : IImportExportService //reultatet av en dampig hjärna som fick för sig "AtT DeTtA VaR En BrA IdE!! 
 {
 
     private readonly IUserService _userService;
@@ -26,13 +26,13 @@ public class ImportExportService : IImportExportService
         }
         var json = File.ReadAllText(fileName); 
         return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
-    }
+    } //tar in en jsonlista från en extern fil, oklart om den faktiskt funkar precis som den ska. 
 
     public void SaveListToFile<T>(List<T> list, string fileName)
     {
         var json = JsonSerializer.Serialize(list);
         File.WriteAllText(fileName, json);
-    }
+    } //sparar ner den impoterade listan. 
 
     public void ShowMenu()
     {
@@ -63,7 +63,7 @@ public class ImportExportService : IImportExportService
 
             }
         }
-    }
+    } //menyalternativ för servicen. 
 
     private void ExportUsers() // Skicka ut en Json fil till skrivbordet om det så önskar, varför kan man undra, jag undrar varför inte....
     {
