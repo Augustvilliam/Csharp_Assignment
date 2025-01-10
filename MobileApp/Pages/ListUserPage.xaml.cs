@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using Business.Factory;
-using Business.Helper;
 using Business.Interfaces;
 using Business.Models;
 
@@ -84,11 +82,9 @@ public partial class ListUserPage : ContentPage
         _selectedUser.Locality = Entry_Locality.Text;
         _selectedUser.Phonenmbr = Entry_Phone.Text;
 
-        if (!_userValidation.ValidateUser(_selectedUser, out string errorMessage))
-        {
-            await DisplayAlert("Validation Error", errorMessage, "OK");
+        if (!ValidateInputUser(_selectedUser, out string errorMessage))
             return;
-        }
+        
 
         _userService.EditUser(_selectedUser.UserId, _selectedUser);
         _fileService.SaveListToFile(_users.ToList());
@@ -97,8 +93,12 @@ public partial class ListUserPage : ContentPage
         ClearForm();
         Button_Create.IsVisible = true;
         Button_EditConfirm.IsVisible = false;
+        ReloadUsers(); //laddar om användarlistan så att gamal info inte visas fram tills att man byer användare en gång.
     }
-
+    private async void Button_Back_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("///UserMainPage");
+    }
 
     private async void Button_Create_Clicked(object sender, EventArgs e)
     {
@@ -116,14 +116,10 @@ public partial class ListUserPage : ContentPage
 
 
 
-        if (!_userValidation.ValidateUser(inputUser, out string errorMessage))
-        {
-            await DisplayAlert(" Validation Error", errorMessage, "ok");
+        if (!ValidateInputUser(inputUser, out string errorMessage))
             return;
-        }
 
         var newUser = _userFactory.CreateUser(inputUser);
-
         _userService.Add(newUser);
         _users.Add(newUser);
 
@@ -191,6 +187,15 @@ public partial class ListUserPage : ContentPage
         Entry_Postal.Text = string.Empty;
         Entry_Locality.Text = string.Empty;
         Entry_Phone.Text = string.Empty;
+
+        Label_FirstNameError.IsVisible = false;
+        Label_LastNameError.IsVisible = false;
+        Label_EmailError.IsVisible = false;
+        Label_AdressError.IsVisible = false;
+        Label_PostalError.IsVisible = false;
+        Label_LocalityError.IsVisible = false;
+        Label_PhoneError.IsVisible = false;
+
         _selectedUser = null!;
 
     }
@@ -204,4 +209,81 @@ public partial class ListUserPage : ContentPage
         Label_Locality.Text = string.Empty;
         Label_Phone.Text = string.Empty;
     }
+    private bool ValidateInputUser(User user, out string errorMessage)
+    {
+        if (!_userValidation.ValidateUser(user, out errorMessage))
+        {
+            DisplayAlert("Validation Error", errorMessage, "OK");
+            return false;
+        }
+        return true;
+    }
+
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                // Dölj felmeddelande om fältet är tomt
+                var emptyErrorLabel = GetErrorLabel(entry);
+                if (emptyErrorLabel != null)
+                {
+                    emptyErrorLabel.IsVisible = false;
+                }
+                else
+                {
+                    Debug.WriteLine($"Error: No matching label found for entry {entry.Placeholder}");
+                }
+                return;
+            }
+
+            var errorLabel = GetErrorLabel(entry);
+            if (errorLabel == null)
+            {
+                Debug.WriteLine($"Error: No matching label found for entry {entry.Placeholder}");
+                return;
+            }
+
+            bool isValid = ValidateEntry(entry, e.NewTextValue);
+
+            errorLabel.IsVisible = !isValid;
+            errorLabel.Text = !isValid ? GetValidationMessage(entry) : string.Empty;
+        }
+    }
+
+
+
+    private Label GetErrorLabel(Entry entry)
+    {
+        return entry == Entry_FirstName ? Label_FirstNameError :
+       entry == Entry_LastName ? Label_LastNameError :
+       entry == Entry_Email ? Label_EmailError :
+       entry == Entry_Adress ? Label_AdressError :
+       entry == Entry_Postal ? Label_PostalError :
+       entry == Entry_Locality ? Label_LocalityError :
+       entry == Entry_Phone ? Label_PhoneError : null!;
+    }
+    private bool ValidateEntry (Entry entry, string value)
+    {
+        return entry == Entry_FirstName ? _userValidation.ValidateName(value) :
+         entry == Entry_LastName ? _userValidation.ValidateName(value) :
+         entry == Entry_Email ? _userValidation.ValidateEmail(value) :
+         entry == Entry_Adress ? _userValidation.ValidateAdress(value) :
+         entry == Entry_Postal ? _userValidation.ValidatePostal(value) :
+         entry == Entry_Locality ? _userValidation.ValidateLocality(value) :
+         entry == Entry_Phone ? _userValidation.ValidatePhone(value) : true;
+    }
+    private string GetValidationMessage(Entry entry)
+    {
+        return entry == Entry_FirstName ? "First name must contain at least 2 characters." :
+               entry == Entry_LastName ? "Last name must contain at least 2 characters." :
+               entry == Entry_Email ? "Invalid email format." :
+               entry == Entry_Adress ? "Address cannot be empty." :
+               entry == Entry_Postal ? "Postal code must only contain numbers." :
+               entry == Entry_Locality ? "Locality cannot be empty." :
+               entry == Entry_Phone ? "Phone number must only contain numbers." :
+               string.Empty;
+    }
+
 }

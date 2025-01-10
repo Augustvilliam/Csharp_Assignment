@@ -2,18 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Pages.ListUserPage"
-             Title="ListUserPage">
+             Title="ListUserPage"
+             Background="{StaticResource Gray900}"
+
+             >
     
     <Grid ColumnDefinitions="*, *, *" >
-        
+
         <VerticalStackLayout Grid.Column="0" Margin="20">
 
             <Label 
                 Text="User Details"
-                VerticalOptions="Center" 
                 FontAttributes="Bold"
-                HorizontalOptions="Center" 
-                Margin="10,0,10,10"
+                Style="{StaticResource HeaderMain}"
                 />
             <Label Margin="40, 0, 0, 0" Text="Id:" FontAttributes="Bold" />
             <Label Margin="40, 0, 0, 0" x:Name=" Label_UserId" />
@@ -30,22 +31,26 @@
             <Label Margin="40, 0, 0, 0" Text="Phone Number:" FontAttributes="Bold" />
             <Label Margin="40, 0, 0, 0" x:Name=" Label_Phone" />
 
+         <Button
+         x:Name="Button_Back"
+         Clicked="Button_Back_Clicked"
+         Text="Return"
+         HorizontalOptions="Start" 
+         Margin="40, 0"
+     />
         </VerticalStackLayout>
-
-        <VerticalStackLayout Grid.Column="1" Margin="20">
+        <VerticalStackLayout Padding="20, 0 ,20 ,0"  Grid.Column="1" Margin="20">
             <Label Text="Existing Users"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   Margin="10,0,10,10"
+                    Style="{StaticResource HeaderMain}"
                    />
             <ScrollView VerticalOptions="FillAndExpand">
                 <CollectionView x:Name="UserListView" SelectionMode="Single" SelectionChanged="UsertListView_selectionChanged" HeightRequest="900">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Margin="10" Padding="10" BorderColor="Gold" BackgroundColor="Purple" HasShadow="True">
+                            <Frame Margin="10" Padding="10" HasShadow="True">
                                 <Grid ColumnDefinitions="auto, *, auto" Padding="10" RowDefinitions="*, *, *, *">
                                     <Label Margin="0, 0, 10, 10" Text="First Name:" Grid.Column="0" Grid.Row="0"></Label>
                                     <Label Margin="0, 0, 0, 10" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="0"></Label>
@@ -57,8 +62,8 @@
                                     <Label Margin="0, 0, 0, 10" Text="{Binding UserId}" Grid.Column="1" Grid.Row="2"></Label>
 
                                     <HorizontalStackLayout Grid.Row="3" Grid.Column="2">
-                                        <Button Margin="0, 0, 10, 0" Text="✏️" Clicked="Button_Edit_Clicked" Grid.Column="1"></Button>
-                                        <Button Text="🗑️" Clicked="Button_Delete_Clicked" Grid.Column="2"/>
+                                        <Button Style="{StaticResource SmallBtn}" Text="✏️" Clicked="Button_Edit_Clicked" Grid.Column="1"></Button>
+                                        <Button Style="{StaticResource SmallBtn}" Text="🗑️" Clicked="Button_Delete_Clicked" Grid.Column="2"/>
                                     </HorizontalStackLayout>
                                 </Grid>
                             </Frame>
@@ -66,74 +71,83 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
-           
-        </VerticalStackLayout>
 
+        </VerticalStackLayout>
         <VerticalStackLayout Grid.Column="2" Margin="20">
             <Label 
-                
-                 Text="Create User"
-                FontAttributes="Bold"
-                 VerticalOptions="Center" 
-                 HorizontalOptions="Center"
-                Margin="10,0,10,10"
-                />
+            Text="Create User"
+            Style="{StaticResource HeaderMain}"
+            />
+            <Label x:Name="Label_FirstNameError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-                x:Name="Entry_FirstName"
-                Placeholder="First Name"
-                HorizontalOptions="Fill"
-                />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_FirstName"
+            Placeholder="First Name"
+                TextChanged="Entry_TextChanged"
+            />
+
+            <Label x:Name="Label_LastNameError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_LastName"
-              Placeholder="Last Name"
-              HorizontalOptions="Fill"              
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_LastName"
+            Placeholder="Last Name"
+                TextChanged="Entry_TextChanged"
+            />
+            <Label x:Name="Label_EmailError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_Email"
-              Placeholder="Email"
-              HorizontalOptions="Fill"              
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_Email"
+            Placeholder="Email"
+                TextChanged="Entry_TextChanged"
+            />
+            <Label x:Name="Label_AdressError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_Adress"
-              Placeholder="Adress"
-              HorizontalOptions="Fill"              
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_Adress"
+            Placeholder="Adress"
+                TextChanged="Entry_TextChanged"
+            />
+            <Label x:Name="Label_PostalError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_Postal"
-              Placeholder="Postal-Code"
-              HorizontalOptions="Fill"              
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_Postal"
+            Placeholder="Postal-Code"
+                TextChanged="Entry_TextChanged"
+            />
+            <Label x:Name="Label_LocalityError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_Locality"
-              Placeholder="Locality"
-              HorizontalOptions="Fill"              
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_Locality"
+            Placeholder="Locality"
+                TextChanged="Entry_TextChanged"
+            />
+            <Label x:Name="Label_PhoneError" Style="{StaticResource ErrorLable}"/>
             <Entry
-                Margin="0, 0, 40, 10"
-              x:Name="Entry_Phone"
-              Placeholder="Phone number"
-              HorizontalOptions="Fill"    
-              />
+            Style="{StaticResource MainEntry}"
+            x:Name="Entry_Phone"
+            Placeholder="Phone number"
+                TextChanged="Entry_TextChanged"
+            
+            />
+            
             <Button
-                Margin="0, 0, 40, 10"
-                x:Name="Button_Create"
-                Text="Create User"
-                Clicked="Button_Create_Clicked"
-                />
+            Style="{StaticResource EntryBtn}"
+            x:Name="Button_Create"
+            Text="Create User"
+            Clicked="Button_Create_Clicked"
+             
+            />
             <Button
-               x:Name="Button_EditConfirm"
-               Text="Update User"
-               Clicked="Button_EditConfirm_Clicked"
-                IsVisible="False"
-               />
+            Style="{StaticResource EntryBtn}"
+            x:Name="Button_EditConfirm"
+            Text="Update User"
+            Clicked="Button_EditConfirm_Clicked"
+            IsVisible="False"
+            />
 
         </VerticalStackLayout>
+
+
 
     </Grid>
     

@@ -2,10 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Pages.UserImportPage"
-             Title="UserImportPage">
+             Title="UserImportPage"
+             Background="{StaticResource Gray900}"
+
+             >
+             
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to The Import Export Page. This is a WIP and therefore look like abolute dodo"
+            Text="Sorry hans här finns inget. Fanns inte tid över att implementra, men hey Back knappen funkar iaf så det är något :)"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 

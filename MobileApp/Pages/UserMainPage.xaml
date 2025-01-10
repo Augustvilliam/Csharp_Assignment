@@ -2,18 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Pages.UserMainPage"
-             Title="User Main Page">
+             Title="User Main Page" 
+             Background="{StaticResource Gray900}"
+             >
+    
     <Grid RowDefinitions="auto, auto, auto, auto">
         
         <VerticalStackLayout>
-        <Label  
+            <Label  
             Grid.Row="0"
             Text="Welcome To The Admin Tool. Please Select An Option."
             Style="{StaticResource Headline}"
             SemanticProperties.HeadingLevel="Level1"
             />
-
-        <Button
+            <Button
             Grid.Row="1"
             x:Name="Button_List"
             Clicked="Button_List_Clicked"
@@ -21,24 +23,21 @@
             HorizontalOptions="Center" 
             Margin="10"
             />
-        <Button
+            <Button
             Grid.Row="2"
             x:Name="Button_Import"
             Clicked="Button_Import_Clicked"
             Text="Import/Export Menu!"
             HorizontalOptions="Center"
             Margin="10"
-
             />
-
-        <Button
+            <Button
             Grid.Row="3"
             x:Name="Button_Quit"
             Clicked="Button_Quit_Clicked"
             Text="Exit!"
             HorizontalOptions="Center"
             Margin="10"
-
             />
 
         </VerticalStackLayout>

@@ -18,12 +18,6 @@
     <Color x:Key="Magenta">#D600AA</Color>
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
-    <Color x:Key="GrassGreen">#7db46c</Color>
-    <Color x:Key="LightestSky">#e7ebe0</Color>
-    <Color x:Key="Clearwater">#abd6df</Color>
-    <Color x:Key="BtnPrimary">#6366F1</Color>
-    <Color x:Key="ColorCard">#6467f214</Color>
-
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
