@@ -7,7 +7,7 @@ public partial class UserMainPage : ContentPage
         InitializeComponent();
 	}
 
-    private void Button_Quit_Clicked(object sender, EventArgs e)
+    private void Button_Quit_Clicked(object sender, EventArgs e) //dödar appen. klart man ska ha en egen exit knapp. Men ordinarie halvfabrikat får vara kvar. 
     {
         Application.Current.Quit();
     }

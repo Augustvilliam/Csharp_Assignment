@@ -6,21 +6,71 @@
              Background="{StaticResource Gray900}"
              Shell.NavBarIsVisible="False"
              >
-             
-    <VerticalStackLayout>
-        <Label 
-            Text="Sorry hans här finns inget. Fanns inte tid över att implementra, men hey Back knappen funkar iaf så det är något men du ser iaf att det går att navigera mellan sidorna felfritt :)"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            FontSize="20"
-            FontAttributes="Bold"
-            />
+             <!-- Tjenare, kul att du vill gå in här och kika. Detta är hopsatt sista minuten och funkar exakt lika dåligt som i consolappen. men hey hade man tid över  hande man. typ allt är ihopbakat av chat GPT, bara lite finlir från mig själv. Tack och hej leverpastej -->
 
-        <Button
-         x:Name="Button_Back"
-         Clicked="Button_Back_Clicked"
-         Text="Return"
-         HorizontalOptions="Center" 
-     />
-    </VerticalStackLayout>
+
+<Grid RowDefinitions="auto, auto, *">
+        <VerticalStackLayout Grid.Row="0">
+
+            <Label 
+                Style="{StaticResource HeaderMain}"
+                Text="Import and exportmenu. do not enjoy this halfbaked halfassed feature."
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="30"
+                />
+
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1">
+     
+            <Button
+                x:Name="Button_Export"
+                Clicked="Button_Export_Clicked"
+                Text="Export User to desktop"
+                HorizontalOptions="Center" 
+                Margin="10, 10, 10, 10"
+                />
+                <Button  
+               Margin="10, 10, 10, 10"
+               x:Name="Button_Back"
+               Clicked="Button_Back_Clicked"
+               Text="Return"
+               HorizontalOptions="Center" 
+               />
+            <Button
+                Margin="10, 10, 10, 10"
+                x:Name="Button_Import"
+                Clicked="Button_Import_Clicked"
+                Text="Import User"
+                HorizontalOptions="Center" 
+                />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label 
+                Text="INSTRUKTIONER!!!"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="20"
+                FontAttributes="Bold"
+                />
+            <Label 
+                Text="Export funkar så att den slänger ut en Json fil på skrivbordet. inget konstigt. IMPORT däremot är inte speciellt användbar men tar in en extern Json lista som måste heta users.json som måste ligga på skrivbordet.
+                ... . den funkar inte alls bra och bör inte tas speciellt seriöst. Det ska tillägas att filen måste heta users.json"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="20"
+                />
+
+        </VerticalStackLayout>
+    </Grid>
+    
+    
+    
+    
 </ContentPage>

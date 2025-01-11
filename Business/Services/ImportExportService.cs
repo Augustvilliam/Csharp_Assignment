@@ -20,18 +20,33 @@ public class ImportExportService : IImportExportService //reultatet av en dampig
 
     public List<T> LoadListFromFile<T>(string fileName)
     {
-        if (!File.Exists(fileName))
-        {
-            return new List<T>();
+        try {
+            if (!File.Exists(fileName))
+            {
+                return new List<T>();
+            }
+            var json = File.ReadAllText(fileName);
+            return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
         }
-        var json = File.ReadAllText(fileName); 
-        return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to load filename {fileName}: {ex.Message}", ex);
+        }
     } //tar in en jsonlista från en extern fil, oklart om den faktiskt funkar precis som den ska. 
 
     public void SaveListToFile<T>(List<T> list, string fileName)
     {
-        var json = JsonSerializer.Serialize(list);
-        File.WriteAllText(fileName, json);
+
+        try 
+        {
+            var json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true});
+            File.WriteAllText(fileName, json);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to save file {fileName}: {ex.Message}", ex);
+        }
+
     } //sparar ner den impoterade listan. 
 
     public void ShowMenu()
@@ -73,7 +88,7 @@ public class ImportExportService : IImportExportService //reultatet av en dampig
         try
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filePath = Path.Combine(desktopPath, "users.txt");
+            string filePath = Path.Combine(desktopPath, "users.json");
 
             var users = _fileService.LoadList();
             if (users != null && users.Any())
@@ -101,7 +116,7 @@ public class ImportExportService : IImportExportService //reultatet av en dampig
     private void ImportUsers() // för att läsa in en EXTERN JSON fil från skrivbordet. Varför? Jag hade tråkigt. den är förövrigt fullkomligt väderlös om man inte copypastar en exakt rätt formaterad fil.
     {
         Console.Clear();
-        Console.WriteLine("Please enter the file name, including extention. (only .txt format");
+        Console.WriteLine("Please enter the file name, including extension (only .json format):");
         string fileName = Console.ReadLine()!;
 
         try
@@ -111,39 +126,27 @@ public class ImportExportService : IImportExportService //reultatet av en dampig
 
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("File not found. Make sure the File existst and that you include extentions.");
+                Console.WriteLine("File not found. Make sure the file exists and that you include the extension.");
                 Console.ReadKey();
                 return;
             }
-            var lines = File.ReadAllLines(filePath);
 
+            // Läs in hela filen som JSON
+            var importedUsers = LoadListFromFile<User>(filePath);
 
-
-            foreach (var line in lines)
+            foreach (var user in importedUsers)
             {
-                var parts = line.Split(",");
-
-                if (parts.Length == 3)
-                {
-                    User user = new()
-                    {
-                        FirstName = parts[0].Trim(),
-                        LastName = parts[1].Trim(),
-                        Email = parts[2].Trim(),
-                    };
-                    _userService.Add(user);
-
-                }
-                else
-                {
-                    Console.WriteLine($"Invalid format in line: {line}. skipping");
-                }
+                _userService.Add(user);
             }
-            Console.WriteLine("User imported!");
+
+            Console.WriteLine($"Imported {importedUsers.Count} users from {filePath}.");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Something went wrong: {ex.Message}");
+        }
+        finally
+        {
             Console.ReadKey();
         }
     }

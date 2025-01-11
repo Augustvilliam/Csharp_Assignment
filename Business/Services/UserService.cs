@@ -4,15 +4,11 @@ using Business.Models;
 
 namespace Business.Services;
 
-public class UserService : IUserService //userService. Här hanteras saker som add, lägga till i listan, hämta upp en User via I, edit och delete 
+public class UserService(IFileService fileService) : IUserService //userService. Här hanteras saker som add, lägga till i listan, hämta upp en User via I, edit och delete 
 {
-    private List<User> _users = new();
-    private readonly IFileService _fileService;
+    private List<User> _users = [];
+    private readonly IFileService _fileService = fileService;
 
-    public UserService(IFileService fileService)
-    {
-        _fileService = fileService;
-    }
     public void Add(User user)
     {
         if (user == null) 
@@ -23,13 +19,13 @@ public class UserService : IUserService //userService. Här hanteras saker som a
     }
     public IEnumerable<User> GetAll() 
     {
-        _users = _fileService.LoadList() ?? new List<User>();
+        _users = _fileService.LoadList() ?? [];
         return _users; 
     }
 
     public User GetUserById(string id)
     {
-        _users = _fileService.LoadList() ?? new List<User>();
+        _users = _fileService.LoadList() ?? [];
         return _users.FirstOrDefault(u => u.UserId == id);
     }
 
@@ -38,10 +34,7 @@ public class UserService : IUserService //userService. Här hanteras saker som a
         if (updateUser == null)
             throw new ArgumentNullException(nameof (updateUser), "Updated User Cannot Be Null");
        
-        var user = GetUserById(id);
-        if (user == null)
-            throw new InvalidOperationException($"User with ID {id} Does not exist.");
-        
+        var user = GetUserById(id) ?? throw new InvalidOperationException($"User with ID {id} Does not exist.");
         user.FirstName = updateUser.FirstName;
         user.LastName = updateUser.LastName;
         user.Email = updateUser.Email;
@@ -56,7 +49,7 @@ public class UserService : IUserService //userService. Här hanteras saker som a
 
     public void DeleteUser(string id)
     {
-        _users = _fileService.LoadList() ?? new List<User>();
+        _users = _fileService.LoadList() ?? [];
         var user = _users.FirstOrDefault(u => u.UserId == id);
         if (user != null )
         {

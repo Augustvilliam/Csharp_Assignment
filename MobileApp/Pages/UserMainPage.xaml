@@ -13,6 +13,7 @@
         <VerticalStackLayout>
             <Label  
             Grid.Row="0"
+            Margin="25"
             Text="Welcome To The Admin Tool. Please Select An Option."
             Style="{StaticResource Headline}"
             SemanticProperties.HeadingLevel="Level1"

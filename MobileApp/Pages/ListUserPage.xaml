@@ -7,9 +7,8 @@
              Shell.NavBarIsVisible="False"
 
              >
-    
-    <Grid ColumnDefinitions="*, *, *" >
 
+    <Grid ColumnDefinitions="*, *, *" >
         <VerticalStackLayout Grid.Column="0" Margin="20">
 
             <Label 
@@ -44,14 +43,14 @@
             <Label Text="Existing Users"
                     Style="{StaticResource HeaderMain}"
                    />
-            <ScrollView VerticalOptions="FillAndExpand">
-                <CollectionView x:Name="UserListView" SelectionMode="Single" SelectionChanged="UsertListView_selectionChanged" HeightRequest="900">
+            <ScrollView VerticalOptions="FillAndExpand"  Padding="10">
+                <CollectionView x:Name="UserListView" SelectionMode="Single" SelectionChanged="UsertListView_selectionChanged" HeightRequest="800">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Margin="10" Padding="10" HasShadow="True">
+                            <Frame Margin="10" Padding="10">
                                 <Grid ColumnDefinitions="auto, *, auto" Padding="10" RowDefinitions="*, *, *, *">
                                     <Label Margin="0, 0, 10, 10" Text="First Name:" Grid.Column="0" Grid.Row="0"></Label>
                                     <Label Margin="0, 0, 0, 10" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="0"></Label>
@@ -130,7 +129,7 @@
                 TextChanged="Entry_TextChanged"
             
             />
-            
+
             <Button
             Style="{StaticResource EntryBtn}"
             x:Name="Button_Create"
@@ -147,9 +146,6 @@
             />
 
         </VerticalStackLayout>
-
-
-
     </Grid>
     
 </ContentPage>

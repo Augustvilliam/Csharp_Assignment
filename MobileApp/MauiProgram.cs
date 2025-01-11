@@ -23,6 +23,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddSingleton<IUserFactory, UserFactory>();
         builder.Services.AddTransient<IUserValidation, UserValidation>();
+        builder.Services.AddSingleton<IImportExportService, ImportExportService>();
         builder.Services.AddSingleton<UserManagementService>();
         builder.Services.AddTransient<ListUserPage>();
         builder.Services.AddTransient<UserImportPage>();
